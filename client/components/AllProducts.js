@@ -10,15 +10,15 @@ export class AllProducts extends React.Component {
   render() {
     const { products } = this.props;
     return (
-    <div>
-        {products.map(product) => (
-            <div key={product.id}>
-                <img src={product.imageUrl} alt={product.name} />
-                <h4>{product.name}</h4>
-                <p>${product.price}</p>
-            </div>
-        )}
-    </div>
+      <div>
+        {products.map((product) => (
+          <div key={product.id}>
+            <img src={product.imageUrl} alt={product.name} />
+            <h4>{product.name}</h4>
+            <p>${product.price}</p>
+          </div>
+        ))}
+      </div>
     );
   }
 }
