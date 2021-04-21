@@ -2,10 +2,11 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { Login, Signup } from './components/AuthForm';
-import Home from './components/Home';
+import Home from './components/home';
 import { me } from './store';
 import SingleProduct from './components/SingleProduct';
 import AllProducts from './components/AllProducts';
+import Cart from './components/Cart';
 
 /**
  * COMPONENT
@@ -26,6 +27,7 @@ class Routes extends Component {
             <Redirect to="/home" />
             <Route path="/products" component={AllProducts} />
             <Route path="/products/:id" component={SingleProduct} />
+            <Route path="/cart/:id" component={Cart} />
           </Switch>
         ) : (
           <Switch>
@@ -34,6 +36,7 @@ class Routes extends Component {
             <Route path="/signup" component={Signup} />
             <Route path="/products" component={AllProducts} />
             <Route path="/products/:id" component={SingleProduct} />
+            <Route path="/cart/:id" component={Cart} />
           </Switch>
         )}
       </div>

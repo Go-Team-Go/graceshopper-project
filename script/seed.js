@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Product },
+  models: { User, Product, Cart },
 } = require('../server/db');
 
 /**
@@ -103,6 +103,15 @@ async function seed() {
   ];
 
   await Product.bulkCreate(products);
+
+  const cart = [
+    { userId: 1, productId: 1, cartQuantity: 1 },
+    { userId: 2, productId: 2, cartQuantity: 1 },
+    { userId: 1, productId: 3, cartQuantity: 1 },
+    { userId: 2, productId: 4, cartQuantity: 1 },
+  ];
+
+  await Cart.bulkCreate(cart);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
