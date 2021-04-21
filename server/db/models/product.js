@@ -16,11 +16,12 @@ const Product = db.define('product', {
   },
   imageUrl: {
     type: Sequelize.TEXT,
-    defaultValue: 'something here',
+    defaultValue:
+      'https://img.delicious.com.au/CKMUcpx-/w1200/del/2015/11/summer-cocktails-24374-3.jpg',
   },
   price: {
-    type: Sequelize.DECIMAL(10, 2),
-    defaultValue: 10,
+    type: Sequelize.INTEGER,
+    defaultValue: 1000,
   },
   quantity: {
     type: Sequelize.INTEGER,

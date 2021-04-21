@@ -1,6 +1,7 @@
-import React from "react";
-import { connect } from "react-redux";
-import { fetchProducts } from "../store/products";
+import React from 'react';
+import { connect } from 'react-redux';
+import { fetchProducts } from '../store/products';
+import { Link } from 'react-router-dom';
 
 export class AllProducts extends React.Component {
   componentDidMount() {
@@ -9,22 +10,35 @@ export class AllProducts extends React.Component {
 
   render() {
     const { products } = this.props;
+    console.log('products:', products);
     return (
       <div>
-        {products.map((product) => (
-          <div key={product.id}>
-            <img src={product.imageUrl} alt={product.name} />
-            <h4>{product.name}</h4>
-            <p>${product.price}</p>
+        {products.length ? (
+          products.map((product) => (
+            <div key={product.id}>
+              <img src={product.imageUrl} alt={product.name} />
+              <Link to={`/products/${product.id}`}>
+                <h4>{product.name}</h4>
+              </Link>
+              <p>${product.price / 100}</p>
+            </div>
+          ))
+        ) : (
+          <div>
+            <h3>Loading...</h3>
+            <img
+              src="https://media1.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
+              alt="loading"
+            />
           </div>
-        ))}
+        )}
       </div>
     );
   }
 }
 
 const mapState = (state) => ({
-  products: state.products.all,
+  products: state.allProducts,
 });
 
 const mapDispatch = (dispatch) => ({
