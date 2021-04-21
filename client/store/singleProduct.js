@@ -18,7 +18,7 @@ export const getProduct = (id) => {
   };
 };
 
-const initState = { product: {} };
+const initState = {};
 
 export default function (state = initState, action) {
   switch (action.type) {
