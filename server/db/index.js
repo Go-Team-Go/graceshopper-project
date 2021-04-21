@@ -3,11 +3,7 @@ const Sequelize = require('sequelize');
 const db = require('./db');
 const User = require('./models/user');
 const Product = require('./models/product');
-
-//defining cart through table
-const Cart = db.define('cart', {
-  cartQuantity: Sequelize.INTEGER,
-});
+const Cart = require('./models/cart');
 
 //associations could go here!
 Product.belongsToMany(User, { through: Cart });

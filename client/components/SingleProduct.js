@@ -14,7 +14,7 @@ class SingleProduct extends React.Component {
         <h1>{product.name}</h1>
         <img src={product.imageUrl} />
         <p>{product.description}</p>
-        <p>{product.price}</p>
+        <p>${product.price / 100}</p>
         <p>{product.quantity}</p>
         <button>add to cart</button>
       </div>
