@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 
 //action type
-const SET_PRODUCTS = "SET_PRODUCTS";
+const SET_PRODUCTS = 'SET_PRODUCTS';
 
 //action creator
 
@@ -16,23 +16,20 @@ export const setProducts = (products) => {
 export const fetchProducts = () => {
   return async (dispatch) => {
     try {
-      const { data: products } = await axios.get("/api/products");
+      const { data: products } = await axios.get('/api/products');
       dispatch(setProducts(products));
     } catch (err) {
-      console.log("Error fetching products");
+      console.log('Error fetching products');
     }
   };
 };
 
 //reducer
-const initialState = {
-  all: [],
-};
 
-export default function productsReducer(state = initialState, action) {
+export default function allProducts(state = [], action) {
   switch (action.type) {
     case SET_PRODUCTS:
-      return { ...state, all: action.products };
+      return action.products;
     default:
       return state;
   }

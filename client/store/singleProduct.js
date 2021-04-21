@@ -18,9 +18,7 @@ export const getProduct = (id) => {
   };
 };
 
-const initState = {};
-
-export default function (state = initState, action) {
+export default function (state = {}, action) {
   switch (action.type) {
     case GOT_PRODUCT:
       return action.product;
