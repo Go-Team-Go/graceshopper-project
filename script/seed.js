@@ -31,7 +31,6 @@ async function seed() {
       username: 'karen',
       password: '123',
       email: 'karen@karen.com',
-      // admin: false,
     }),
   ]);
 
