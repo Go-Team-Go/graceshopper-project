@@ -19,13 +19,14 @@ class SingleProduct extends React.Component {
 
     let item = {
       name: product.name,
-      id: product.id,
+      productId: product.id,
       price: product.price,
       imageUrl: product.imageUrl,
       quantity: 1,
     };
     if (token) {
       this.props.addItem(item);
+      console.log('added');
     } else {
       this.props.add(item);
     }

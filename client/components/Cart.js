@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchCart, addItem, _updateCart } from '../store/cart';
+import { fetchCart, updateCart, _updateCart } from '../store/cart';
 
 // ----- add cart total inventory and total price functionality
 
@@ -10,24 +10,31 @@ class Cart extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
   componentDidMount() {
-    // console.log('did mount', this.props);
-    this.props.getCart(this.props.match.params.id);
-    // if (this.props.match.params.id) {
-    //   this.props.getCart(this.props.match.params.id);
-    // }
+    const token = window.localStorage.getItem('token');
+    if (token) {
+      this.props.getCart();
+    }
   }
 
   handleClick(evt) {
-    let id = parseInt(evt.target.value);
-
-    if (evt.target.name === 'remove') {
-      this.props.update({ id, quantity: -1 });
+    let productId = parseInt(evt.target.value);
+    const token = window.localStorage.getItem('token');
+    if (token) {
+      if (evt.target.name === 'remove') {
+        this.props.updateDB({ productId, quantity: -1 });
+      } else {
+        this.props.updateDB({ productId, quantity: +1 });
+      }
     } else {
-      this.props.update({ id, quantity: +1 });
+      if (evt.target.name === 'remove') {
+        this.props.update({ productId, quantity: -1 });
+      } else {
+        this.props.update({ productId, quantity: +1 });
+      }
     }
   }
+
   render() {
-    console.log('render', this.props);
     const cart = this.props.cart || [];
     return (
       <div>
@@ -36,7 +43,7 @@ class Cart extends React.Component {
             <h1>Name:{item.name}</h1>
             <img src={item.imageUrl}></img>
             <p>Price:{item.price}</p>
-            <p>Cart Quantity:{item.quantity}</p>
+            <p>Cart Quantity:{item.cart.quantity}</p>
             <button name="remove" onClick={this.handleClick} value={item.id}>
               Remove
             </button>
@@ -60,8 +67,9 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    getCart: (id) => dispatch(fetchCart(id)),
+    getCart: () => dispatch(fetchCart()),
     update: (item) => dispatch(_updateCart(item)),
+    updateDB: (item) => dispatch(updateCart(item)),
   };
 };
 

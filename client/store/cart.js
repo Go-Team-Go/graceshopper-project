@@ -31,10 +31,15 @@ export const setCart = (cart) => {
 
 //thunk creator
 
-export const updateCart = (id, item) => {
+export const updateCart = (item) => {
   return async (dispatch) => {
     try {
-      const { data: newItem } = await axios.put(`/api/cart/${id}`, item);
+      const token = window.localStorage.getItem(TOKEN);
+      const { data: newItem } = await axios.put(`/api/cart`, item, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(_updateCart(newItem));
     } catch (err) {
       console.log(err);
@@ -46,7 +51,11 @@ export const addItem = (item) => {
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem(TOKEN);
-      const { data: newItem } = await axios.post('/api/cart');
+      const { data: newItem } = await axios.post('/api/cart', item, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(addToCart(newItem));
     } catch (err) {
       console.log(err);
@@ -58,7 +67,11 @@ export const fetchCart = () => {
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem(TOKEN);
-      const { data: cart } = await axios.get(`/api/users/${id}/cart`);
+      const { data: cart } = await axios.get(`/api/cart`, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(setCart(cart));
     } catch (error) {
       console.log(error);
@@ -82,7 +95,7 @@ export default function (state = initState, action) {
       } else return [...state, action.item];
     case UPDATE_CART:
       let alreadyItem = state.filter((item) => {
-        return action.item.id === item.id;
+        return action.item.productId === item.id;
       })[0];
 
       alreadyItem.quantity += action.item.quantity;
