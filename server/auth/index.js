@@ -30,6 +30,10 @@ router.post('/signup', async (req, res, next) => {
 //GET /auth/me
 router.get('/me', async (req, res, next) => {
   try {
+    console.log(
+      'Logging the REQ from the auth/me route =============================>>>>>>>>>>>>>>>>>>>>>',
+      req.headers,
+    );
     res.send(await User.findByToken(req.headers.authorization));
   } catch (ex) {
     next(ex);
