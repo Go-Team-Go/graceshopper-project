@@ -19,6 +19,8 @@ class SingleProduct extends React.Component {
     let item = {
       name: product.name,
       id: product.id,
+      price: product.price,
+      imageUrl: product.imageUrl,
       quantity: 1,
     };
 

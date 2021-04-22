@@ -105,10 +105,10 @@ async function seed() {
   await Product.bulkCreate(products);
 
   const cart = [
-    { userId: 1, productId: 1, cartQuantity: 1 },
-    { userId: 2, productId: 2, cartQuantity: 1 },
-    { userId: 1, productId: 3, cartQuantity: 1 },
-    { userId: 2, productId: 4, cartQuantity: 1 },
+    { userId: 1, productId: 1, quantity: 1 },
+    { userId: 2, productId: 2, quantity: 1 },
+    { userId: 1, productId: 3, quantity: 1 },
+    { userId: 2, productId: 4, quantity: 1 },
   ];
 
   await Cart.bulkCreate(cart);

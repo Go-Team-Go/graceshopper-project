@@ -1,10 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchCart, addItem } from '../store/cart';
+import { fetchCart, addItem, _updateCart } from '../store/cart';
 
 class Cart extends React.Component {
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+  }
   componentDidMount() {
-    this.props.getCart(this.props.match.params.id);
+    if (this.props.match.params.id) {
+      this.props.getCart(this.props.match.params.id);
+    }
+  }
+
+  handleClick(evt) {
+    let id = parseInt(evt.target.value);
+
+    if (evt.target.name === 'remove') {
+      this.props.update({ id, quantity: -1 });
+    } else {
+      this.props.update({ id, quantity: +1 });
+    }
   }
   render() {
     const cart = this.props.cart || [];
@@ -16,9 +32,13 @@ class Cart extends React.Component {
             <h1>Name:{item.name}</h1>
             <img src={item.imageUrl}></img>
             <p>Price:{item.price}</p>
-            <p>Cart Quantity:{item.cart.cartQuantity}</p>
-            <button>Remove</button>
-            <button>Add</button>
+            <p>Cart Quantity:{item.quantity}</p>
+            <button name="remove" onClick={this.handleClick} value={item.id}>
+              Remove
+            </button>
+            <button name="add" onClick={this.handleClick} value={item.id}>
+              Add
+            </button>
           </div>
         ))}
       </div>
@@ -35,6 +55,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getCart: (id) => dispatch(fetchCart(id)),
+    update: (item) => dispatch(_updateCart(item)),
   };
 };
 
