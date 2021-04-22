@@ -2,15 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchCart, addItem, _updateCart } from '../store/cart';
 
+// ----- add cart total inventory and total price functionality
+
 class Cart extends React.Component {
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this);
   }
   componentDidMount() {
-    if (this.props.match.params.id) {
-      this.props.getCart(this.props.match.params.id);
-    }
+    // console.log('did mount', this.props);
+    this.props.getCart(this.props.match.params.id);
+    // if (this.props.match.params.id) {
+    //   this.props.getCart(this.props.match.params.id);
+    // }
   }
 
   handleClick(evt) {
@@ -23,8 +27,8 @@ class Cart extends React.Component {
     }
   }
   render() {
+    console.log('render', this.props);
     const cart = this.props.cart || [];
-    // console.log(this.props);
     return (
       <div>
         {cart.map((item) => (
@@ -41,6 +45,8 @@ class Cart extends React.Component {
             </button>
           </div>
         ))}
+        <div>total: {cart.length}</div>
+        <button>checkout</button>
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getProduct } from '../store/singleProduct';
-import { addToCart } from '../store/cart';
+import { addToCart, addItem } from '../store/cart';
 
 class SingleProduct extends React.Component {
   constructor() {
@@ -14,6 +14,7 @@ class SingleProduct extends React.Component {
 
   handleClick() {
     // console.log('PROPS IN SINGLE', this.props);
+    const token = window.localStorage.getItem('token');
     const product = this.props.product;
 
     let item = {
@@ -23,8 +24,11 @@ class SingleProduct extends React.Component {
       imageUrl: product.imageUrl,
       quantity: 1,
     };
-
-    this.props.add(item);
+    if (token) {
+      this.props.addItem(item);
+    } else {
+      this.props.add(item);
+    }
   }
 
   render() {
@@ -52,6 +56,7 @@ const mapDispatch = (dispatch) => {
   return {
     load: (id) => dispatch(getProduct(id)),
     add: (item) => dispatch(addToCart(item)),
+    addItem: (item) => dispatch(addItem(item)),
   };
 };
 

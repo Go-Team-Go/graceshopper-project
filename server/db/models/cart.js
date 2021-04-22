@@ -5,7 +5,13 @@ const Cart = db.define('cart', {
   quantity: {
     type: Sequelize.INTEGER,
   },
-  //what can we add here for order history
+  purchased: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
+  purchasedDate: {
+    type: Sequelize.DATEONLY,
+  },
 });
 
 module.exports = Cart;

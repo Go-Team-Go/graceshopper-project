@@ -4,13 +4,22 @@ const {
 } = require('../db');
 module.exports = router;
 
-//POST /api/cart/:userId
+//POST /api/cart/
 
-router.post('/:id', async (req, res, next) => {
+router.get('/', (req, res, next) => {
   try {
-    const userId = req.params.id;
-    const { cartQuantity, productId } = req.body;
-    const item = await Cart.create({ userId, cartQuantity, productId });
+    res.send('hello');
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/', async (req, res, next) => {
+  try {
+    const user = await User.findByToken(req.headers.authorization);
+    console.log(req.body);
+    const { quantity, productId } = req.body;
+    const item = await Cart.create({ userId: user.id, quantity, productId });
     res.send(item);
   } catch (err) {
     next(err);
