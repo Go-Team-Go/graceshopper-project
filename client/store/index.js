@@ -4,12 +4,11 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import auth from './auth';
 import singleProduct from './singleProduct';
-import productsReducer from './products';
-import cart from './cart';
+import allProducts from './products';
 
 const reducer = combineReducers({
   auth,
-  products: productsReducer,
+  allProducts,
   singleProduct,
   cart,
 });
