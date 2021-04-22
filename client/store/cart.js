@@ -51,7 +51,13 @@ export default function (state = initState, action) {
     case SET_CART:
       return action.cart;
     case ADD_TO_CART:
-      return [...state, action.item];
+      let existingItem = state.filter((item) => {
+        return action.item.id === item.id;
+      })[0];
+      if (existingItem) {
+        existingItem.quantity += action.item.quantity;
+        return [...state];
+      } else return [...state, action.item];
     default:
       return state;
   }
