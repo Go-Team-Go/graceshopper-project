@@ -17,6 +17,7 @@ export const fetchProducts = () => {
   return async (dispatch) => {
     try {
       const { data: products } = await axios.get('/api/products');
+      //setTimeout(() => dispatch(setProducts(products)), 5000); //<--testing loading screen
       dispatch(setProducts(products));
     } catch (err) {
       console.log('Error fetching products');
