@@ -5,12 +5,16 @@ const Cart = db.define('cart', {
   quantity: {
     type: Sequelize.INTEGER,
   },
-  purchased: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false,
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
   },
-  purchasedDate: {
-    type: Sequelize.DATEONLY,
+  price: {
+    type: Sequelize.INTEGER,
+    defaultValue: 1000,
   },
 });
 

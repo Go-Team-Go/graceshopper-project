@@ -4,10 +4,17 @@ import axios from 'axios';
 const SET_CART = 'SET_CART';
 const ADD_TO_CART = 'ADD_TO_CART';
 const UPDATE_CART = 'UPDATE_CART';
+const UPDATE_USER_CART = 'UPDATE_USER_CART';
 const TOKEN = 'token';
 
 //action creator
 
+export const _updateUserCart = (item) => {
+  return {
+    type: UPDATE_USER_CART,
+    item,
+  };
+};
 export const _updateCart = (item) => {
   return {
     type: UPDATE_CART,
@@ -31,7 +38,7 @@ export const setCart = (cart) => {
 
 //thunk creator
 
-export const updateCart = (item) => {
+export const updateUserCart = (item) => {
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem(TOKEN);
@@ -40,7 +47,7 @@ export const updateCart = (item) => {
           authorization: token,
         },
       });
-      dispatch(_updateCart(newItem));
+      dispatch(_updateUserCart(newItem));
     } catch (err) {
       console.log(err);
     }
@@ -87,18 +94,23 @@ export default function (state = initState, action) {
       return action.cart;
     case ADD_TO_CART:
       let existingItem = state.filter((item) => {
-        return action.item.id === item.id;
+        return action.item.productId === item.productId;
       })[0];
       if (existingItem) {
         existingItem.quantity += action.item.quantity;
         return [...state];
       } else return [...state, action.item];
     case UPDATE_CART:
-      let alreadyItem = state.filter((item) => {
-        return action.item.productId === item.id;
+      let alreadyExists = state.filter((item) => {
+        return action.item.productId === item.productId;
       })[0];
-
-      alreadyItem.quantity += action.item.quantity;
+      alreadyExists.quantity += action.item.quantity;
+      return [...state];
+    case UPDATE_USER_CART:
+      let itemToUpdate = state.filter((item) => {
+        return action.item.productId === item.productId;
+      })[0];
+      itemToUpdate.quantity = action.item.quantity;
       return [...state];
     default:
       return state;

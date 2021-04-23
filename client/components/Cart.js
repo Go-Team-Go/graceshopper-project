@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchCart, updateCart, _updateCart } from '../store/cart';
+import { fetchCart, updateUserCart, _updateCart } from '../store/cart';
 
 // ----- add cart total inventory and total price functionality
 
@@ -39,15 +39,23 @@ class Cart extends React.Component {
     return (
       <div>
         {cart.map((item) => (
-          <div key={item.id}>
-            <h1>Name:{item.name}</h1>
-            <img src={item.imageUrl}></img>
-            <p>Price:{item.price}</p>
-            <p>Cart Quantity:{item.cart.quantity}</p>
-            <button name="remove" onClick={this.handleClick} value={item.id}>
+          <div key={item.productId}>
+            <h1>{item.name}</h1>
+            {/* <img src={item.imageUrl}></img> */}
+            <p>Price: ${item.price / 100}</p>
+            <p>In Cart: {item.quantity}</p>
+            <button
+              name="remove"
+              onClick={this.handleClick}
+              value={item.productId}
+            >
               Remove
             </button>
-            <button name="add" onClick={this.handleClick} value={item.id}>
+            <button
+              name="add"
+              onClick={this.handleClick}
+              value={item.productId}
+            >
               Add
             </button>
           </div>
@@ -69,7 +77,7 @@ const mapDispatch = (dispatch) => {
   return {
     getCart: () => dispatch(fetchCart()),
     update: (item) => dispatch(_updateCart(item)),
-    updateDB: (item) => dispatch(updateCart(item)),
+    updateDB: (item) => dispatch(updateUserCart(item)),
   };
 };
 

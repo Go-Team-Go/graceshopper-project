@@ -13,7 +13,6 @@ class SingleProduct extends React.Component {
   }
 
   handleClick() {
-    // console.log('PROPS IN SINGLE', this.props);
     const token = window.localStorage.getItem('token');
     const product = this.props.product;
 
@@ -26,7 +25,6 @@ class SingleProduct extends React.Component {
     };
     if (token) {
       this.props.addItem(item);
-      console.log('added');
     } else {
       this.props.add(item);
     }
