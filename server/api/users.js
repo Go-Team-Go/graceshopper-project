@@ -12,7 +12,6 @@ router.get('/', requireToken, isAdmin, async (req, res, next) => {
     const allUsers = await User.findAll({
       attributes: ['id', 'username', 'email', 'admin'],
     });
-    // const allUsers = await User.findAll(req.body);
     res.send(allUsers);
   } catch (err) {
     next(err);

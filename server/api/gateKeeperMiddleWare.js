@@ -2,6 +2,8 @@ const {
   models: { User },
 } = require('../db');
 
+//These are middleware methods that can be used in api routes to add extra checks before hitting the routes
+
 const requireToken = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
