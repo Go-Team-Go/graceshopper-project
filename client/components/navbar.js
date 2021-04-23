@@ -1,47 +1,72 @@
-import React from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { logout } from '../store';
 
-const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>FS-App-Template</h1>
-    <nav>
+const Navbar = ({ handleClick, isLoggedIn }) => (
+  <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <div className="container-fluid justify-content-between">
+      <Link to="/home" className="navbar-brand">
+        <img
+          src="gracesipper.png"
+          width="200"
+          height="100"
+          class="d-inline-block align-text-top"
+        />
+      </Link>
+
       {isLoggedIn ? (
-        <div>
+        <div className="collapse navbar-collapse">
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
+          <ul className="nav">
+            <li className="nav-item">
+              <Link to="/home" className="nav-link">
+                Home
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="#" onClick={handleClick} className="nav-link">
+                Logout
+              </Link>
+            </li>
+          </ul>
         </div>
       ) : (
-        <div>
+        <div className="nav justify-content-end">
           {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
+          <ul className="nav ">
+            <li className="nav-item">
+              <Link to="/login" className="nav-link">
+                Login
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/signup" className="nav-link">
+                Sign Up
+              </Link>
+            </li>
+          </ul>
         </div>
       )}
-    </nav>
-    <hr />
-  </div>
-)
+    </div>
+  </nav>
+);
 
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapState = (state) => {
   return {
-    isLoggedIn: !!state.auth.id
-  }
-}
+    isLoggedIn: !!state.auth.id,
+  };
+};
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
     handleClick() {
-      dispatch(logout())
-    }
-  }
-}
+      dispatch(logout());
+    },
+  };
+};
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(Navbar);
