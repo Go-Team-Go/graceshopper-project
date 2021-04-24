@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getProduct } from '../store/singleProduct';
-import { addToCart, addItem } from '../store/cart';
+import { addToCart, addToUserCart } from '../store/cart';
 
 class SingleProduct extends React.Component {
   constructor() {
@@ -55,7 +55,7 @@ const mapDispatch = (dispatch) => {
   return {
     load: (id) => dispatch(getProduct(id)),
     add: (item) => dispatch(addToCart(item)),
-    addItem: (item) => dispatch(addItem(item)),
+    addItem: (item) => dispatch(addToUserCart(item)),
   };
 };
 
