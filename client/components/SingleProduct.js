@@ -6,13 +6,14 @@ import { addToCart, addToUserCart } from '../store/cart';
 class SingleProduct extends React.Component {
   constructor() {
     super();
-    this.handleClick = this.handleClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
     this.props.load(this.props.match.params.id);
   }
 
-  handleClick() {
+  handleSubmit(evt) {
+    evt.preventDefault();
     const token = window.localStorage.getItem('token');
     const product = this.props.product;
 
@@ -21,7 +22,7 @@ class SingleProduct extends React.Component {
       productId: product.id,
       price: product.price,
       imageUrl: product.imageUrl,
-      quantity: 1,
+      quantity: parseInt(evt.target.quantity.value),
     };
     if (token) {
       this.props.addItem(item);
@@ -39,7 +40,10 @@ class SingleProduct extends React.Component {
         <p>{product.description}</p>
         <p>${product.price / 100}</p>
         <p>{product.quantity}</p>
-        <button onClick={this.handleClick}>add to cart</button>
+        <form onSubmit={this.handleSubmit}>
+          <input type="number" name="quantity"></input>
+          <button type="submit">add to cart</button>
+        </form>
       </div>
     );
   }

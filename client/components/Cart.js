@@ -14,8 +14,7 @@ const token = window.localStorage.getItem('token');
 class Cart extends React.Component {
   constructor() {
     super();
-    this.handleAdd = this.handleAdd.bind(this);
-    this.handleRemove = this.handleRemove.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
   componentDidMount() {
@@ -25,22 +24,31 @@ class Cart extends React.Component {
     }
   }
 
-  handleAdd(evt) {
-    let productId = parseInt(evt.target.value);
-    if (token) {
-      this.props.updateDB({ productId, quantity: +1 });
-    } else {
-      this.props.update({ productId, quantity: +1 });
-    }
-  }
+  handleSubmit(evt) {
+    evt.preventDefault();
+    let productId = parseInt(evt.target.name);
+    const newQuantity = parseInt(evt.target.quantity.value);
 
-  handleRemove(evt) {
-    let productId = parseInt(evt.target.value);
     if (token) {
-      this.props.updateDB({ productId, quantity: -1 });
+      if (newQuantity <= 0) {
+        this.props.deleteDB({ productId });
+      } else {
+        this.props.updateDB({
+          productId,
+          newQuantity,
+        });
+      }
     } else {
-      this.props.update({ productId, quantity: -1 });
+      if (newQuantity <= 0) {
+        this.props.delete({ productId });
+      } else {
+        this.props.update({
+          productId,
+          newQuantity,
+        });
+      }
     }
+    evt.target.reset();
   }
 
   handleDelete(evt) {
@@ -60,20 +68,35 @@ class Cart extends React.Component {
           <div key={item.productId}>
             <h1>{item.name}</h1>
             {/* <img src={item.imageUrl}></img> */}
-            <p>Price: ${item.price / 100}</p>
             <p>In Cart: {item.quantity}</p>
-            <button onClick={this.handleRemove} value={item.productId}>
-              Remove
-            </button>
-            <button onClick={this.handleAdd} value={item.productId}>
-              Add
-            </button>
+            <p>Subtotal: ${(item.price / 100) * item.quantity}</p>
+            <form onSubmit={this.handleSubmit} name={item.productId}>
+              <input
+                type="number"
+                name="quantity"
+                min="0"
+                defaultValue={item.quantity}
+                ref={this.input}
+              ></input>
+              <button type="submit">update cart</button>
+            </form>
             <button onClick={this.handleDelete} value={item.productId}>
               Delete
             </button>
           </div>
         ))}
-        <div>total: {cart.length}</div>
+        <br />
+        <div>
+          total items:{' '}
+          {cart.reduce((total, current) => (total += current.quantity), 0)}
+        </div>
+        <div>
+          cart total: $
+          {cart.reduce((total, current) => {
+            const subtotal = (current.price / 100) * current.quantity;
+            return (total += subtotal);
+          }, 0)}
+        </div>
         <button>checkout</button>
       </div>
     );
