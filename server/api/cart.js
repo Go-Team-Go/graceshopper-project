@@ -7,10 +7,6 @@ module.exports = router;
 router.get('/', async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
-    // const cart = await User.findByPk(user.id, {
-    //   include: { model: Product },
-    // });
-    // res.send(cart.products);
     const items = await Cart.findAll({
       where: { userId: user.id },
     });
