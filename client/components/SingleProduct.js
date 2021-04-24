@@ -29,6 +29,7 @@ class SingleProduct extends React.Component {
     } else {
       this.props.add(item);
     }
+    evt.target.reset();
   }
 
   render() {
@@ -41,7 +42,13 @@ class SingleProduct extends React.Component {
         <p>${product.price / 100}</p>
         <p>{product.quantity}</p>
         <form onSubmit={this.handleSubmit}>
-          <input type="number" name="quantity"></input>
+          <input
+            type="number"
+            name="quantity"
+            min="1"
+            defaultValue="1"
+            ref={this.input}
+          ></input>
           <button type="submit">add to cart</button>
         </form>
       </div>

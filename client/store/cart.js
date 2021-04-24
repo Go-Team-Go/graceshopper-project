@@ -8,6 +8,7 @@ const UPDATE_CART = 'UPDATE_CART';
 const UPDATE_USER_CART = 'UPDATE_USER_CART';
 const DELETE_ITEM = 'DELETE_ITEM';
 const TOKEN = 'token';
+const CART = 'tempcart';
 
 //action creator
 
@@ -137,8 +138,14 @@ export default function (state = initState, action) {
       case ADD_TO_CART:
         if (existingItem) {
           existingItem.quantity += action.item.quantity;
+          window.sessionStorage.setItem(CART, JSON.stringify(state));
+          window.localStorage.removeItem('cart');
           return [...state];
-        } else return [...state, action.item];
+        } else {
+          state = [...state, action.item];
+          window.sessionStorage.setItem(CART, JSON.stringify(state));
+          return state;
+        }
       case ADD_TO_USER_CART:
         if (existingItem) {
           existingItem.quantity = action.item.quantity;
@@ -146,12 +153,17 @@ export default function (state = initState, action) {
         } else return [...state, action.item];
       case UPDATE_CART:
         existingItem.quantity = action.item.newQuantity;
+        window.sessionStorage.setItem(CART, JSON.stringify(state));
         return [...state];
       case UPDATE_USER_CART:
         existingItem.quantity = action.item.quantity;
         return [...state];
       case DELETE_ITEM:
-        return state.filter((item) => item.productId !== action.item.productId);
+        state = state.filter(
+          (item) => item.productId !== action.item.productId,
+        );
+        window.sessionStorage.setItem(CART, JSON.stringify(state));
+        return state;
       default:
         return state;
     }

@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import {
+  setCart,
   fetchCart,
   updateUserCart,
   updateCart,
@@ -8,8 +10,8 @@ import {
   deleteItem,
 } from '../store/cart';
 
-// ----- add cart total inventory and total price functionality
 const token = window.localStorage.getItem('token');
+const CART = 'tempcart';
 
 class Cart extends React.Component {
   constructor() {
@@ -18,9 +20,11 @@ class Cart extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
   }
   componentDidMount() {
-    const token = window.localStorage.getItem('token');
+    const storedCart = window.sessionStorage.getItem(CART);
     if (token) {
       this.props.getCart();
+    } else if (storedCart) {
+      this.props.setCart(JSON.parse(storedCart));
     }
   }
 
@@ -66,7 +70,9 @@ class Cart extends React.Component {
       <div>
         {cart.map((item) => (
           <div key={item.productId}>
-            <h1>{item.name}</h1>
+            <Link to={`/products/${item.productId}`}>
+              <h1>{item.name}</h1>
+            </Link>
             {/* <img src={item.imageUrl}></img> */}
             <p>In Cart: {item.quantity}</p>
             <p>Subtotal: ${(item.price / 100) * item.quantity}</p>
@@ -112,6 +118,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getCart: () => dispatch(fetchCart()),
+    setCart: (cart) => dispatch(setCart(cart)),
     update: (item) => dispatch(updateCart(item)),
     updateDB: (item) => dispatch(updateUserCart(item)),
     delete: (item) => dispatch(deletedItem(item)),
