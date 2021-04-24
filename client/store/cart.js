@@ -145,7 +145,7 @@ export default function (state = initState, action) {
           return [...state];
         } else return [...state, action.item];
       case UPDATE_CART:
-        existingItem.quantity += action.item.quantity;
+        existingItem.quantity = action.item.newQuantity;
         return [...state];
       case UPDATE_USER_CART:
         existingItem.quantity = action.item.quantity;
