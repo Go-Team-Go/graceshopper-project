@@ -16,6 +16,9 @@ const Cart = db.define('cart', {
     type: Sequelize.INTEGER,
     defaultValue: 1000,
   },
+  purchased: {
+    type: Sequelize.BOOLEAN,
+  },
 });
 
 module.exports = Cart;

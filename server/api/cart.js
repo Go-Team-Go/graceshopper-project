@@ -48,9 +48,6 @@ router.put('/', async (req, res, next) => {
       where: { userId: user.id, productId },
     });
     const newQuantity = item.quantity + quantity;
-    // if (newQuantity <= 0) {
-    //   await item.destroy();
-    // }
     const updatedItem = await item.update({ quantity: newQuantity });
     res.send(updatedItem);
   } catch (err) {

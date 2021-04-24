@@ -7,7 +7,8 @@ import { fetchCart, updateUserCart, _updateCart } from '../store/cart';
 class Cart extends React.Component {
   constructor() {
     super();
-    this.handleClick = this.handleClick.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
   }
   componentDidMount() {
     const token = window.localStorage.getItem('token');
@@ -16,21 +17,23 @@ class Cart extends React.Component {
     }
   }
 
-  handleClick(evt) {
+  handleAdd(evt) {
     let productId = parseInt(evt.target.value);
     const token = window.localStorage.getItem('token');
     if (token) {
-      if (evt.target.name === 'remove') {
-        this.props.updateDB({ productId, quantity: -1 });
-      } else {
-        this.props.updateDB({ productId, quantity: +1 });
-      }
+      this.props.updateDB({ productId, quantity: +1 });
     } else {
-      if (evt.target.name === 'remove') {
-        this.props.update({ productId, quantity: -1 });
-      } else {
-        this.props.update({ productId, quantity: +1 });
-      }
+      this.props.update({ productId, quantity: +1 });
+    }
+  }
+
+  handleRemove(evt) {
+    let productId = parseInt(evt.target.value);
+    const token = window.localStorage.getItem('token');
+    if (token) {
+      this.props.updateDB({ productId, quantity: -1 });
+    } else {
+      this.props.update({ productId, quantity: -1 });
     }
   }
 
@@ -44,18 +47,10 @@ class Cart extends React.Component {
             {/* <img src={item.imageUrl}></img> */}
             <p>Price: ${item.price / 100}</p>
             <p>In Cart: {item.quantity}</p>
-            <button
-              name="remove"
-              onClick={this.handleClick}
-              value={item.productId}
-            >
+            <button onClick={this.handleRemove} value={item.productId}>
               Remove
             </button>
-            <button
-              name="add"
-              onClick={this.handleClick}
-              value={item.productId}
-            >
+            <button onClick={this.handleAdd} value={item.productId}>
               Add
             </button>
           </div>
