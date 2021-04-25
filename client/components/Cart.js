@@ -2,17 +2,30 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
+  setCart,
+  fetchCart,
   updateUserCart,
   updateCart,
   deletedItem,
   deleteItem,
 } from '../store/cart';
 
+const token = window.localStorage.getItem('token');
+const CART = 'tempcart';
+const storedCart = window.sessionStorage.getItem(CART);
+
 class Cart extends React.Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+  }
+  componentDidMount() {
+    if (token) {
+      this.props.getCart();
+    } else if (storedCart) {
+      this.props.setCart(JSON.parse(storedCart));
+    }
   }
 
   handleSubmit(evt) {
@@ -114,6 +127,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
+    getCart: () => dispatch(fetchCart()),
+    setCart: (cart) => dispatch(setCart(cart)),
     update: (item) => dispatch(updateCart(item)),
     updateDB: (item) => dispatch(updateUserCart(item)),
     delete: (item) => dispatch(deletedItem(item)),
