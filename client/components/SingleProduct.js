@@ -36,21 +36,33 @@ class SingleProduct extends React.Component {
     const product = this.props.product || {};
     return (
       <div>
-        <h1>{product.name}</h1>
-        <img src={product.imageUrl} />
-        <p>{product.description}</p>
-        <p>${product.price / 100}</p>
-        <p>{product.quantity}</p>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="number"
-            name="quantity"
-            min="1"
-            defaultValue="1"
-            ref={this.input}
-          ></input>
-          <button type="submit">add to cart</button>
-        </form>
+        {product.name ? (
+          <div>
+            <h1>{product.name}</h1>
+            <img src={product.imageUrl} />
+            <p>{product.description}</p>
+            <p>${product.price / 100}</p>
+            <p>{product.quantity}</p>
+            <form onSubmit={this.handleSubmit}>
+              <input
+                type="number"
+                name="quantity"
+                min="1"
+                defaultValue="1"
+                ref={this.input}
+              ></input>
+              <button type="submit">add to cart</button>
+            </form>
+          </div>
+        ) : (
+          <div>
+            <h3>Loading...</h3>
+            <img
+              src="https://media1.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
+              alt="loading"
+            />
+          </div>
+        )}
       </div>
     );
   }

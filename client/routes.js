@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { Login, Signup } from './components/AuthForm';
+import { setCart, fetchCart } from './store/cart';
 import Home from './components/home';
 import { me } from './store';
 import SingleProduct from './components/SingleProduct';
@@ -12,9 +13,18 @@ import Checkout from './components/Checkout';
 /**
  * COMPONENT
  */
+const token = window.localStorage.getItem('token');
+const CART = 'tempcart';
+const storedCart = window.sessionStorage.getItem(CART);
+
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
+    if (token) {
+      this.props.getCart();
+    } else if (storedCart) {
+      this.props.setCart(JSON.parse(storedCart));
+    }
   }
 
   render() {
@@ -63,6 +73,8 @@ const mapDispatch = (dispatch) => {
     loadInitialData() {
       dispatch(me());
     },
+    getCart: () => dispatch(fetchCart()),
+    setCart: (cart) => dispatch(setCart(cart)),
   };
 };
 
