@@ -10,7 +10,6 @@ export class AllProducts extends React.Component {
 
   render() {
     const { products } = this.props;
-
     return (
       <div className="container">
         <img

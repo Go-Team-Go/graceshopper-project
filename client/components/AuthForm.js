@@ -7,7 +7,6 @@ import { authenticate } from '../store';
  */
 const AuthForm = (props) => {
   const { name, displayName, handleSubmit, error } = props;
-  console.log('PROPS from authform------->>>>>>', props);
 
   return (
     <div>
@@ -26,7 +25,7 @@ const AuthForm = (props) => {
           <label htmlFor="password">Password</label>
         </div>
         <div className="form-floating mb-3 col-7">
-          <input name="email" type="text" className="form-control" />
+          <input name="email" type="email" className="form-control" />
           <label htmlFor="email">Email</label>
         </div>
 
