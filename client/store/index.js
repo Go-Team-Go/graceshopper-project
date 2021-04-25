@@ -6,16 +6,20 @@ import auth from './auth';
 import singleProduct from './singleProduct';
 import allProducts from './products';
 import cart from './cart';
+import adminReducer from './admin';
 
 const reducer = combineReducers({
   auth,
   allProducts,
   singleProduct,
   cart,
+  adminReducer,
 });
+
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true })),
 );
+
 const store = createStore(reducer, middleware);
 
 export default store;
