@@ -10,7 +10,6 @@ export class AllProducts extends React.Component {
 
   render() {
     const { products } = this.props;
-    console.log('products:', products);
     return (
       <div>
         {products.length ? (
