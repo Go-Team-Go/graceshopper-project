@@ -94,11 +94,7 @@ class Cart extends React.Component {
           ))
         ) : (
           <div>
-            <h3>Loading...</h3>
-            <img
-              src="https://media1.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
-              alt="loading"
-            />
+            <h3>Nothing in the cart...</h3>
           </div>
         )}
         <br />
