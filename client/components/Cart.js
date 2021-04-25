@@ -1,46 +1,109 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchCart, addItem, _updateCart } from '../store/cart';
+import { Link } from 'react-router-dom';
+import {
+  setCart,
+  fetchCart,
+  updateUserCart,
+  updateCart,
+  deletedItem,
+  deleteItem,
+} from '../store/cart';
+
+const token = window.localStorage.getItem('token');
+const CART = 'tempcart';
 
 class Cart extends React.Component {
   constructor() {
     super();
-    this.handleClick = this.handleClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
   componentDidMount() {
-    if (this.props.match.params.id) {
-      this.props.getCart(this.props.match.params.id);
+    const storedCart = window.sessionStorage.getItem(CART);
+    if (token) {
+      this.props.getCart();
+    } else if (storedCart) {
+      this.props.setCart(JSON.parse(storedCart));
     }
   }
 
-  handleClick(evt) {
-    let id = parseInt(evt.target.value);
+  handleSubmit(evt) {
+    evt.preventDefault();
+    let productId = parseInt(evt.target.name);
+    const newQuantity = parseInt(evt.target.quantity.value);
 
-    if (evt.target.name === 'remove') {
-      this.props.update({ id, quantity: -1 });
+    if (token) {
+      if (newQuantity <= 0) {
+        this.props.deleteDB({ productId });
+      } else {
+        this.props.updateDB({
+          productId,
+          newQuantity,
+        });
+      }
     } else {
-      this.props.update({ id, quantity: +1 });
+      if (newQuantity <= 0) {
+        this.props.delete({ productId });
+      } else {
+        this.props.update({
+          productId,
+          newQuantity,
+        });
+      }
+    }
+    evt.target.reset();
+  }
+
+  handleDelete(evt) {
+    let productId = parseInt(evt.target.value);
+    if (token) {
+      this.props.deleteDB({ productId });
+    } else {
+      this.props.delete({ productId });
     }
   }
+
   render() {
     const cart = this.props.cart || [];
-    // console.log(this.props);
     return (
       <div>
         {cart.map((item) => (
-          <div key={item.id}>
-            <h1>Name:{item.name}</h1>
-            <img src={item.imageUrl}></img>
-            <p>Price:{item.price}</p>
-            <p>Cart Quantity:{item.quantity}</p>
-            <button name="remove" onClick={this.handleClick} value={item.id}>
-              Remove
-            </button>
-            <button name="add" onClick={this.handleClick} value={item.id}>
-              Add
+          <div key={item.productId}>
+            <Link to={`/products/${item.productId}`}>
+              <h1>{item.name}</h1>
+            </Link>
+            {/* <img src={item.imageUrl}></img> */}
+            <p>In Cart: {item.quantity}</p>
+            <p>Subtotal: ${(item.price / 100) * item.quantity}</p>
+            <form onSubmit={this.handleSubmit} name={item.productId}>
+              <input
+                type="number"
+                name="quantity"
+                min="0"
+                defaultValue={item.quantity}
+                ref={this.input}
+              ></input>
+              <button type="submit">update cart</button>
+            </form>
+            <button onClick={this.handleDelete} value={item.productId}>
+              Delete
             </button>
           </div>
         ))}
+        <br />
+        <div>
+          total items:{' '}
+          {cart.reduce((total, current) => (total += current.quantity), 0)}
+        </div>
+        <div>
+          cart total: $
+          {cart.reduce((total, current) => {
+            const subtotal = (current.price / 100) * current.quantity;
+            return (total += subtotal);
+          }, 0)}
+        </div>
+        <button>checkout</button>
       </div>
     );
   }
@@ -54,8 +117,12 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    getCart: (id) => dispatch(fetchCart(id)),
-    update: (item) => dispatch(_updateCart(item)),
+    getCart: () => dispatch(fetchCart()),
+    setCart: (cart) => dispatch(setCart(cart)),
+    update: (item) => dispatch(updateCart(item)),
+    updateDB: (item) => dispatch(updateUserCart(item)),
+    delete: (item) => dispatch(deletedItem(item)),
+    deleteDB: (item) => dispatch(deleteItem(item)),
   };
 };
 

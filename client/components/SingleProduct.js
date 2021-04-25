@@ -1,30 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getProduct } from '../store/singleProduct';
-import { addToCart } from '../store/cart';
+import { addToCart, addToUserCart } from '../store/cart';
 
 class SingleProduct extends React.Component {
   constructor() {
     super();
-    this.handleClick = this.handleClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
     this.props.load(this.props.match.params.id);
   }
 
-  handleClick() {
-    // console.log('PROPS IN SINGLE', this.props);
+  handleSubmit(evt) {
+    evt.preventDefault();
+    const token = window.localStorage.getItem('token');
     const product = this.props.product;
 
     let item = {
       name: product.name,
-      id: product.id,
+      productId: product.id,
       price: product.price,
       imageUrl: product.imageUrl,
-      quantity: 1,
+      quantity: parseInt(evt.target.quantity.value),
     };
-
-    this.props.add(item);
+    if (token) {
+      this.props.addItem(item);
+    } else {
+      this.props.add(item);
+    }
+    evt.target.reset();
   }
 
   render() {
@@ -36,7 +41,16 @@ class SingleProduct extends React.Component {
         <p>{product.description}</p>
         <p>${product.price / 100}</p>
         <p>{product.quantity}</p>
-        <button onClick={this.handleClick}>add to cart</button>
+        <form onSubmit={this.handleSubmit}>
+          <input
+            type="number"
+            name="quantity"
+            min="1"
+            defaultValue="1"
+            ref={this.input}
+          ></input>
+          <button type="submit">add to cart</button>
+        </form>
       </div>
     );
   }
@@ -52,6 +66,7 @@ const mapDispatch = (dispatch) => {
   return {
     load: (id) => dispatch(getProduct(id)),
     add: (item) => dispatch(addToCart(item)),
+    addItem: (item) => dispatch(addToUserCart(item)),
   };
 };
 

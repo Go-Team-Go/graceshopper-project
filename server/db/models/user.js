@@ -44,11 +44,6 @@ User.prototype.correctPassword = function (candidatePwd) {
 };
 
 User.prototype.generateToken = function () {
-  console.log(
-    'Sj-in user model. Logging process.env ----------->>>>',
-    process.env,
-  );
-
   return jwt.sign({ id: this.id }, process.env.JWT);
 };
 
