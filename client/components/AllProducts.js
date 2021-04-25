@@ -1,11 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchProducts } from '../store/products';
+import { setCart, fetchCart } from '../store/cart';
 import { Link } from 'react-router-dom';
+
+const token = window.localStorage.getItem('token');
+const CART = 'tempcart';
+const storedCart = window.sessionStorage.getItem(CART);
 
 export class AllProducts extends React.Component {
   componentDidMount() {
     this.props.grabProducts();
+
+    if (token) {
+      this.props.getCart();
+    } else if (storedCart) {
+      this.props.setCart(JSON.parse(storedCart));
+    }
   }
 
   render() {
@@ -43,6 +54,8 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   grabProducts: () => dispatch(fetchProducts()),
+  getCart: () => dispatch(fetchCart()),
+  setCart: (cart) => dispatch(setCart(cart)),
 });
 
 export default connect(mapState, mapDispatch)(AllProducts);
