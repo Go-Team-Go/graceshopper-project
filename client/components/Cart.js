@@ -8,6 +8,7 @@ import {
   updateCart,
   deletedItem,
   deleteItem,
+  purchaseCart,
 } from '../store/cart';
 
 const token = window.localStorage.getItem('token');
@@ -103,7 +104,9 @@ class Cart extends React.Component {
             return (total += subtotal);
           }, 0)}
         </div>
-        <button>checkout</button>
+        <form action="/checkout">
+          <input type="submit" value="Checkout" />
+        </form>
       </div>
     );
   }
@@ -123,6 +126,7 @@ const mapDispatch = (dispatch) => {
     updateDB: (item) => dispatch(updateUserCart(item)),
     delete: (item) => dispatch(deletedItem(item)),
     deleteDB: (item) => dispatch(deleteItem(item)),
+    purchase: (cart) => dispatch(purchaseCart(cart)),
   };
 };
 
