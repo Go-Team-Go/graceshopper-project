@@ -8,6 +8,8 @@ import {
   deleteItem,
 } from '../store/cart';
 
+const token = window.localStorage.getItem('token');
+
 class Cart extends React.Component {
   constructor() {
     super();
