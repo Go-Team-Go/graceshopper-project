@@ -2,17 +2,29 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { Login, Signup } from './components/AuthForm';
-import Home from './components/Home';
+import { setCart, fetchCart } from './store/cart';
+import Home from './components/home';
 import { me } from './store';
 import SingleProduct from './components/SingleProduct';
 import AllProducts from './components/AllProducts';
+import Cart from './components/Cart';
+import Checkout from './components/Checkout';
 
 /**
  * COMPONENT
  */
+const token = window.localStorage.getItem('token');
+const CART = 'tempcart';
+const storedCart = window.sessionStorage.getItem(CART);
+
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
+    if (token) {
+      this.props.getCart();
+    } else if (storedCart) {
+      this.props.setCart(JSON.parse(storedCart));
+    }
   }
 
   render() {
@@ -23,9 +35,11 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={Home} />
-            <Redirect to="/home" />
+            {/* <Redirect to="/home" /> */}
             <Route exact path="/products" component={AllProducts} />
             <Route path="/products/:id" component={SingleProduct} />
+            <Route path="/cart" component={Cart} />
+            <Route path="/checkout" component={Checkout} />
           </Switch>
         ) : (
           <Switch>
@@ -34,6 +48,8 @@ class Routes extends Component {
             <Route path="/signup" component={Signup} />
             <Route exact path="/products" component={AllProducts} />
             <Route path="/products/:id" component={SingleProduct} />
+            <Route path="/cart" component={Cart} />
+            <Route path="/checkout" component={Checkout} />
           </Switch>
         )}
       </div>
@@ -57,6 +73,8 @@ const mapDispatch = (dispatch) => {
     loadInitialData() {
       dispatch(me());
     },
+    getCart: () => dispatch(fetchCart()),
+    setCart: (cart) => dispatch(setCart(cart)),
   };
 };
 

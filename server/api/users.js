@@ -6,7 +6,7 @@ const { requireToken, isAdmin } = require('./gateKeeperMiddleWare');
 
 module.exports = router;
 
-//GET api/users    ----> find all logged in admin users
+//GET api/users    ----> find all logged in admin users new stuff
 router.get('/', requireToken, isAdmin, async (req, res, next) => {
   try {
     const allUsers = await User.findAll({

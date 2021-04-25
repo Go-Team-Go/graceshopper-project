@@ -18,34 +18,26 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
       {isLoggedIn ? (
         <div className="collapse navbar-collapse">
           {/* The navbar will show these links after you log in */}
-          <ul className="nav">
-            <li className="nav-item">
-              <Link to="/home" className="nav-link">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="#" onClick={handleClick} className="nav-link">
-                Logout
-              </Link>
-            </li>
-          </ul>
+          <Link to="/home">Home</Link>
+          <a href="#" onClick={handleClick}>
+            Logout
+          </a>
+          <Link to="/products">All Products</Link>
+          <Link to="/cart">
+            My Cart{' '}
+            {cart.reduce((total, current) => (total += current.quantity), 0)}
+          </Link>
         </div>
       ) : (
         <div className="nav justify-content-end">
           {/* The navbar will show these links before you log in */}
-          <ul className="nav ">
-            <li className="nav-item">
-              <Link to="/login" className="nav-link">
-                Login
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/signup" className="nav-link">
-                Sign Up
-              </Link>
-            </li>
-          </ul>
+          <Link to="/login">Login</Link>
+          <Link to="/signup">Sign Up</Link>
+          <Link to="/products">All Products</Link>
+          <Link to="/cart">
+            My Cart{' '}
+            {cart.reduce((total, current) => (total += current.quantity), 0)}
+          </Link>
         </div>
       )}
     </div>
@@ -58,6 +50,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
+    cart: state.cart,
   };
 };
 
