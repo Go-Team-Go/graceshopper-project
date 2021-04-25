@@ -37,28 +37,53 @@ class SingleProduct extends React.Component {
     return (
       <div>
         {product.name ? (
-          <div>
-            <h1>{product.name}</h1>
-            <img src={product.imageUrl} />
-            <p>{product.description}</p>
-            <p>${product.price / 100}</p>
-            <p>{product.quantity}</p>
-            <form onSubmit={this.handleSubmit}>
-              <input
-                type="number"
-                name="quantity"
-                min="1"
-                defaultValue="1"
-                ref={this.input}
-              ></input>
-              <button type="submit">add to cart</button>
-            </form>
+          <div className="container">
+            <div className="row">
+              <div className="col">
+                <img
+                  src={product.imageUrl}
+                  className="figure rounded"
+                  width="300"
+                />
+              </div>
+              <div className="col">
+                <h1 className="h1">{product.name}</h1>
+                <p>
+                  <em>{product.description}</em>
+                </p>
+                <p>${product.price / 100}</p>
+                <small className="text-muted">
+                  only {product.quantity} left
+                </small>
+                <hr />
+                <form
+                  onSubmit={this.handleSubmit}
+                  className=" row justify-content-center "
+                >
+                  <div className="form-floating  mb-3">
+                    <input
+                      type="number"
+                      name="quantity"
+                      min="1"
+                      defaultValue="1"
+                      ref={this.input}
+                      className="form-control"
+                    ></input>
+                    <label htmlFor="quantity">Quantity:</label>
+                  </div>
+
+                  <button type="submit" className="btn btn-dark btn-lg">
+                    add to cart
+                  </button>
+                </form>
+              </div>
+            </div>
           </div>
         ) : (
           <div>
             <h3>Loading...</h3>
             <img
-              src="https://media1.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
+              src="https://media4.giphy.com/media/h8fnSteH0zUrlMf291/giphy.gif"
               alt="loading"
             />
           </div>
