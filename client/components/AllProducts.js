@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { fetchProducts } from '../store/products';
 import { setCart, fetchCart } from '../store/cart';
 import { Link } from 'react-router-dom';
-
+//cols are based on ny screen sizes, may need to be tested on other breakpoints
 export class AllProducts extends React.Component {
   componentDidMount() {
     this.props.grabProducts();
@@ -32,7 +32,7 @@ export class AllProducts extends React.Component {
         <div className="card-group">
           {products.length ? (
             products.map((product) => (
-              <div key={product.id} className="col-sm-12 col-md-6 col-lg-4">
+              <div key={product.id} className="col-sm-4 col-md-4 col-lg-4 ">
                 <Link to={`/products/${product.id}`}>
                   <div className="card bg-light text-white ">
                     <img
