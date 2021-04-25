@@ -5,12 +5,14 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import auth from './auth';
 import singleProduct from './singleProduct';
 import allProducts from './products';
+import cart from './cart';
 import adminReducer from './admin';
 
 const reducer = combineReducers({
   auth,
   allProducts,
   singleProduct,
+  cart,
   adminReducer,
 });
 

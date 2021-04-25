@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Product },
+  models: { User, Product, Cart },
 } = require('../server/db');
 
 /**
@@ -53,7 +53,7 @@ async function seed() {
     },
     {
       name: 'Spice Panoma',
-      description: 'a deliciuos Manhattan',
+      description: 'a delicious Manhattan',
       imageUrl:
         'https://images.ctfassets.net/b0q5etab7zkl/3lgiCta6EosQZRjLLn5n8F/65c43983a7dc94e6e977b632623b4499/Spice_PaNoma.jpg?fm=jpg&q=90&w=800&h=1120&fit=fill',
       price: 1000,
@@ -118,6 +118,39 @@ async function seed() {
   ];
 
   await Product.bulkCreate(products);
+
+  const cart = [
+    {
+      userId: 1,
+      productId: 1,
+      quantity: 1,
+      name: 'Raspberry Chambord',
+      price: 1000,
+    },
+    {
+      userId: 2,
+      productId: 2,
+      quantity: 1,
+      name: 'Garden Booch',
+      price: 1000,
+    },
+    {
+      userId: 1,
+      productId: 3,
+      quantity: 1,
+      name: 'Spice Panoma',
+      price: 1000,
+    },
+    {
+      userId: 2,
+      productId: 4,
+      quantity: 1,
+      name: 'Espresso Martini',
+      price: 1000,
+    },
+  ];
+
+  await Cart.bulkCreate(cart);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
