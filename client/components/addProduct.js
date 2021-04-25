@@ -25,6 +25,10 @@ export class AddProduct extends React.Component {
   //handleSubmit --> new Product
 
   render(){
+    const { products } = this.props;
+    console.log('products from the addProduct component:', products);
+
+
     return(
       <div>
         <div>
@@ -67,7 +71,28 @@ export class AddProduct extends React.Component {
         </div>
 
         <div>
-          this is the all products view
+          <h2>Cocktails Available</h2>
+          <div>
+            {products.length ? (
+              products.map(product => (
+                <div key={product.id}>
+                  <img src={product.imageUrl} alt={product.name} />
+                  <h4>{product.name}</h4>
+                  <p>${product.price / 100}</p>
+                  <button>Edit Cocktail</button>
+                  <button>Delete Cocktail</button>
+                </div>
+              ))
+            ) : (
+              <div>
+                <h3>Loading...</h3>
+                <img
+                  src="https://media1.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
+                  alt="loading"
+                />
+              </div>
+            )}
+          </div>
         </div>
 
 
@@ -78,3 +103,12 @@ export class AddProduct extends React.Component {
 
 
 
+const mapState = (state) => ({
+  products: state.allProducts
+});
+
+const mapDispatch = (dispatch) => ({
+  postProduct: () => dispatch(postProduct(prodDets)),
+});
+
+export default connect(mapState, mapDispatch)(AddProduct);
