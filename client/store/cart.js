@@ -9,8 +9,16 @@ const UPDATE_USER_CART = 'UPDATE_USER_CART';
 const DELETE_ITEM = 'DELETE_ITEM';
 const TOKEN = 'token';
 const CART = 'tempcart';
+const PURCHASE_CART = 'PURCHASE_CART';
 
 //action creator
+
+export const purchaseCart = (cart) => {
+  return {
+    type: PURCHASE_CART,
+    cart,
+  };
+};
 
 export const deletedItem = (item) => {
   return {
@@ -163,6 +171,9 @@ export default function (state = initState, action) {
           (item) => item.productId !== action.item.productId,
         );
         window.sessionStorage.setItem(CART, JSON.stringify(state));
+        return state;
+      case PURCHASE_CART:
+        state = state.forEach((item) => item.purchased === true);
         return state;
       default:
         return state;
