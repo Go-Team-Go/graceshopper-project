@@ -39,6 +39,7 @@ export const authenticate = (username, password, email, method) => async (
     });
     window.localStorage.setItem(TOKEN, res.data.token);
     dispatch(me());
+    window.location.reload(false);
   } catch (authError) {
     return dispatch(setAuth({ error: authError }));
   }
@@ -46,6 +47,7 @@ export const authenticate = (username, password, email, method) => async (
 
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
+  window.location.reload(false);
   history.push('/login');
   return {
     type: SET_AUTH,
