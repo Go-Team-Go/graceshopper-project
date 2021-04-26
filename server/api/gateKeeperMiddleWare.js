@@ -4,6 +4,7 @@ const {
 
 //These are middleware methods that can be used in api routes to add extra checks before hitting the routes
 
+//just adding errors for when the user does not exist
 const requireToken = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
@@ -14,6 +15,9 @@ const requireToken = async (req, res, next) => {
     next(err);
   }
 };
+
+//using find or create to find and it in the cart
+//adds a key wasUpdated = (boolean) if a cart was updated
 
 const isAdmin = async (req, res, next) => {
   if (req.user.admin === false) {
