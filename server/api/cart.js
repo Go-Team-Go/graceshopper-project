@@ -1,12 +1,13 @@
 const router = require('express').Router();
+const { requireToken } = require('./gateKeeperMiddleWare');
 const {
   models: { Cart, User },
 } = require('../db');
 module.exports = router;
 
-router.get('/', async (req, res, next) => {
+router.get('/', requireToken, async (req, res, next) => {
   try {
-    const user = await User.findByToken(req.headers.authorization);
+    const user = req.user;
     const items = await Cart.findAll({
       where: { userId: user.id, purchased: false },
     });
@@ -17,9 +18,9 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/history', async (req, res, next) => {
+router.get('/history', requireToken, async (req, res, next) => {
   try {
-    const user = await User.findByToken(req.headers.authorization);
+    const user = req.user;
     const items = await Cart.findAll({
       where: { userId: user.id, purchased: true },
     });
@@ -31,35 +32,28 @@ router.get('/history', async (req, res, next) => {
 });
 
 //POST /api/cart/
-router.post('/', async (req, res, next) => {
+//will have to separate post and put routes here
+
+router.post('/', requireToken, async (req, res, next) => {
   try {
-    const user = await User.findByToken(req.headers.authorization);
+    const user = req.user;
     const { quantity, productId, name, price } = req.body;
-    const [item, created] = await Cart.findOrCreate({
-      where: {
-        userId: user.id,
-        productId,
-        name,
-        price,
-      },
+    const item = await Cart.create({
+      userId: user.id,
+      quantity,
+      productId,
+      name,
+      price,
     });
-    if (created) {
-      item.quantity = quantity;
-      await item.save();
-      res.send(item);
-    } else {
-      const newQuantity = item.quantity + quantity;
-      const updatedItem = await item.update({ quantity: newQuantity });
-      res.send(updatedItem);
-    }
+    res.send(item);
   } catch (err) {
     next(err);
   }
 });
 
-router.put('/', async (req, res, next) => {
+router.put('/', requireToken, async (req, res, next) => {
   try {
-    const user = await User.findByToken(req.headers.authorization);
+    const user = req.user;
     const { newQuantity, productId } = req.body;
     const item = await Cart.findOne({
       where: { userId: user.id, productId },
@@ -71,9 +65,9 @@ router.put('/', async (req, res, next) => {
   }
 });
 
-router.delete('/:productId', async (req, res, next) => {
+router.delete('/:productId', requireToken, async (req, res, next) => {
   try {
-    const user = await User.findByToken(req.headers.authorization);
+    const user = req.user;
     const { productId } = req.params;
     const itemToDelete = await Cart.findOne({
       where: { userId: user.id, productId },
