@@ -11,6 +11,10 @@ const TOKEN = 'token';
 const CART = 'tempcart';
 const PURCHASE_CART = 'PURCHASE_CART';
 
+const updateStorage = (item) => {
+  window.sessionStorage.setItem(CART, JSON.stringify(item));
+};
+
 //action creator
 
 export const purchaseCart = (cart) => {
@@ -49,7 +53,7 @@ export const addToCart = (item) => {
 
 export const addedToUserCart = (item) => {
   return {
-    type: ADD_TO_CART,
+    type: ADD_TO_USER_CART,
     item,
   };
 };
@@ -146,12 +150,11 @@ export default function (state = initState, action) {
       case ADD_TO_CART:
         if (existingItem) {
           existingItem.quantity += action.item.quantity;
-          window.sessionStorage.setItem(CART, JSON.stringify(state));
-          window.localStorage.removeItem('cart');
+          updateStorage(state);
           return [...state];
         } else {
           state = [...state, action.item];
-          window.sessionStorage.setItem(CART, JSON.stringify(state));
+          updateStorage(state);
           return state;
         }
       case ADD_TO_USER_CART:
@@ -161,7 +164,7 @@ export default function (state = initState, action) {
         } else return [...state, action.item];
       case UPDATE_CART:
         existingItem.quantity = action.item.newQuantity;
-        window.sessionStorage.setItem(CART, JSON.stringify(state));
+        updateStorage(state);
         return [...state];
       case UPDATE_USER_CART:
         existingItem.quantity = action.item.quantity;
@@ -170,7 +173,7 @@ export default function (state = initState, action) {
         state = state.filter(
           (item) => item.productId !== action.item.productId,
         );
-        window.sessionStorage.setItem(CART, JSON.stringify(state));
+        updateStorage(state);
         return state;
       case PURCHASE_CART:
         state = state.forEach((item) => item.purchased === true);
