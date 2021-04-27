@@ -1,5 +1,6 @@
 const SET_FILTER = 'SET_FILTER';
 const SET_SORT_PARAM = 'SET_SORT_PARAM';
+const CLEAR = 'CLEAR';
 
 export const setFilter = (filter) => ({
   type: SET_FILTER,
@@ -11,7 +12,11 @@ export const setSortParam = (param) => ({
   param,
 });
 
-const initState = { filter: 'ALL', sortParam: 'ALL' };
+export const clear = () => ({
+  type: CLEAR,
+});
+
+const initState = { filter: 'ALL', sortParam: 'UNSORTED' };
 
 export default function (state = initState, action) {
   switch (action.type) {
@@ -19,6 +24,8 @@ export default function (state = initState, action) {
       return { ...state, filter: action.filter };
     case SET_SORT_PARAM:
       return { ...state, sortParam: action.param };
+    case CLEAR:
+      return initState;
     default:
       return state;
   }

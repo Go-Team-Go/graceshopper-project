@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchProducts } from '../store/products';
 import { setCart, fetchCart } from '../store/cart';
 import { Link } from 'react-router-dom';
+import ProductFilter from './ProductFilter';
 
 export class AllProducts extends React.Component {
   componentDidMount() {
@@ -13,6 +14,7 @@ export class AllProducts extends React.Component {
     const { products } = this.props;
     return (
       <div>
+        <ProductFilter />
         {products.length ? (
           products.map((product) => (
             <div key={product.id}>
