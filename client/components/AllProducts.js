@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchProducts } from '../store/products';
-import { setCart, fetchCart } from '../store/cart';
 import { Link } from 'react-router-dom';
-//cols are based on ny screen sizes, may need to be tested on other breakpoints
+import ProductFilters from './ProductFilter';
+import getSortedProducts from '../selectors/productSelectors';
+
 export class AllProducts extends React.Component {
   componentDidMount() {
     this.props.grabProducts();
@@ -29,6 +30,7 @@ export class AllProducts extends React.Component {
           <figcaption className="text-muted">Ship, Sip, Enjoy.</figcaption>
         </figure>
         <hr />
+        <ProductFilters />
         <div className="card-group">
           {products.length ? (
             products.map((product) => (
@@ -64,7 +66,7 @@ export class AllProducts extends React.Component {
 }
 
 const mapState = (state) => ({
-  products: state.allProducts,
+  products: getSortedProducts(state),
 });
 
 const mapDispatch = (dispatch) => ({

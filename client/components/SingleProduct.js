@@ -1,7 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getProduct } from '../store/singleProduct';
-import { addToCart, addToUserCart } from '../store/cart';
+import {
+  addToCart,
+  addToUserCart,
+  updateCart,
+  updateUserCart,
+} from '../store/cart';
 
 class SingleProduct extends React.Component {
   constructor() {
@@ -16,6 +21,9 @@ class SingleProduct extends React.Component {
     evt.preventDefault();
     const token = window.localStorage.getItem('token');
     const product = this.props.product;
+    let existingItem = this.props.cart.filter((item) => {
+      return item.productId === product.id;
+    })[0];
 
     let item = {
       name: product.name,
@@ -24,10 +32,28 @@ class SingleProduct extends React.Component {
       imageUrl: product.imageUrl,
       quantity: parseInt(evt.target.quantity.value),
     };
-    if (token) {
-      this.props.addItem(item);
+
+    if (existingItem) {
+      let newQuantity =
+        parseInt(evt.target.quantity.value) + existingItem.quantity;
+
+      if (token) {
+        this.props.updateUserCart({
+          productId: product.id,
+          newQuantity,
+        });
+      } else {
+        this.props.updateCart({
+          productId: product.id,
+          newQuantity,
+        });
+      }
     } else {
-      this.props.add(item);
+      if (token) {
+        this.props.addItem(item);
+      } else {
+        this.props.add(item);
+      }
     }
     evt.target.reset();
   }
@@ -96,6 +122,8 @@ class SingleProduct extends React.Component {
 const mapState = (state) => {
   return {
     product: state.singleProduct,
+
+    cart: state.cart,
   };
 };
 
@@ -104,6 +132,8 @@ const mapDispatch = (dispatch) => {
     load: (id) => dispatch(getProduct(id)),
     add: (item) => dispatch(addToCart(item)),
     addItem: (item) => dispatch(addToUserCart(item)),
+    updateUserCart: (item) => dispatch(updateUserCart(item)),
+    updateCart: (item) => dispatch(updateCart(item)),
   };
 };
 

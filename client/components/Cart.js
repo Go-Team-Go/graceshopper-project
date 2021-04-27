@@ -7,6 +7,7 @@ import {
   deletedItem,
   deleteItem,
   purchaseCart,
+  purchaseUserCart,
 } from '../store/cart';
 
 const token = window.localStorage.getItem('token');
@@ -16,6 +17,7 @@ class Cart extends React.Component {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleCheckout = this.handleCheckout.bind(this);
   }
 
   handleSubmit(evt) {
@@ -51,6 +53,14 @@ class Cart extends React.Component {
       this.props.deleteDB({ productId });
     } else {
       this.props.delete({ productId });
+    }
+  }
+
+  handleCheckout() {
+    if (token) {
+      this.props.purchaseUserCart(this.props.cart);
+    } else {
+      this.props.purchase();
     }
   }
 
@@ -124,13 +134,15 @@ class Cart extends React.Component {
             </div>
           </div>
           <div className="container">
-            <form action="/checkout">
-              <input
-                type="submit"
-                value="Checkout"
+            <Link to={'/checkout'}>
+              <button
+                type="button"
+                onClick={this.handleCheckout}
                 className="btn-sm btn-dark col-6"
-              />
-            </form>
+              >
+                Checkout
+              </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -150,7 +162,8 @@ const mapDispatch = (dispatch) => {
     updateDB: (item) => dispatch(updateUserCart(item)),
     delete: (item) => dispatch(deletedItem(item)),
     deleteDB: (item) => dispatch(deleteItem(item)),
-    purchase: (cart) => dispatch(purchaseCart(cart)),
+    purchase: () => dispatch(purchaseCart()),
+    purchaseUserCart: (cart) => dispatch(purchaseUserCart(cart)),
   };
 };
 
