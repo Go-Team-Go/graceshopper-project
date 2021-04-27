@@ -65,6 +65,17 @@ router.put('/', requireToken, async (req, res, next) => {
   }
 });
 
+router.put('/checkout', requireToken, async (req, res, next) => {
+  try {
+    const user = req.user;
+    const cart = req.body;
+    const { purchased } = cart;
+    const newCart = await Cart.update({ where: {} });
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.delete('/:productId', requireToken, async (req, res, next) => {
   try {
     const user = req.user;
