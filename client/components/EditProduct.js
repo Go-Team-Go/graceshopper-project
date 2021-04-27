@@ -13,7 +13,7 @@ const initialState = {
 export class EditProduct extends React.Component {
   constructor(props) {
     super(props);
-    this.state = initialState;
+    this.state = this.props.product;
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -30,14 +30,17 @@ export class EditProduct extends React.Component {
 
   handleSubmit() {
     event.preventDefault();
-    this.props.updateProduct(this.state);
-    this.setState(initialState);
-    this.props.loadProduct(this.props.match.params.id);
+    const { id } = this.props.match.params;
+    this.props.updateProduct(id, this.state);
+
+    this.setState(this.props.product);
+    this.props.loadProduct(id);
     //this.forceUpdate();
   }
 
   render() {
     const id = Number(this.props.match.params.id);
+
     const { product } = this.props;
 
     return (
@@ -51,12 +54,7 @@ export class EditProduct extends React.Component {
             <label htmlFor="name">
               <small>Update Product Name</small>
             </label>
-            <input
-              onChange={this.handleChange}
-              name="name"
-              type="text"
-              required
-            />
+            <input onChange={this.handleChange} name="name" type="text" />
           </div>
           <div>
             <label htmlFor="description">

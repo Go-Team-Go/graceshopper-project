@@ -7,7 +7,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchProducts, postProduct } from '../store/products';
+import { fetchProducts, postProduct, deleteProduct } from '../store/products';
 import { Link } from 'react-router-dom';
 
 const initialState = {
@@ -24,7 +24,7 @@ export class AddProduct extends React.Component {
     this.state = initialState;
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    //this.handleDelete = this.handleDelete.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -37,19 +37,28 @@ export class AddProduct extends React.Component {
     });
   }
 
-  handleSubmit() {
+  handleSubmit(event) {
     event.preventDefault();
     this.props.postProduct(this.state);
 
     this.setState(initialState);
-    this.props.fetchProducts();
-    //this.forceUpdate();
+    // this.props.fetchProducts();
+    event.target.reset();
   }
 
-  //handleDelete
+  handleDelete(event) {
+    const id = event.target.value;
+    this.props.deleteProduct(id);
+    //this.props.fetchProducts();
+  }
 
   render() {
     const { products } = this.props;
+
+    console.log(
+      'this.props from the the render func --------><><<><><><<><',
+      this.props,
+    );
 
     return (
       <div>
@@ -116,7 +125,6 @@ export class AddProduct extends React.Component {
             <div>
               <button type="submit">Submit</button>
             </div>
-            {/* {error && error.response && <div> {error.response.data} </div>} */}
           </form>
         </div>
 
@@ -124,7 +132,7 @@ export class AddProduct extends React.Component {
           <h3>Cocktail Inventory</h3>
           <div>
             {products.length ? (
-              products.map((product) => (
+              products.map((product, ind) => (
                 <div key={product.id}>
                   <img src={product.imageUrl} alt={product.name} />
                   <h4>{product.name}</h4>
@@ -132,7 +140,9 @@ export class AddProduct extends React.Component {
                   <Link to={`/admin/products/${product.id}`}>
                     <button>Edit Cocktail</button>
                   </Link>
-                  <button>Delete Cocktail</button>
+                  <button value={product.id} onClick={this.handleDelete}>
+                    Delete Cocktail
+                  </button>
                 </div>
               ))
             ) : (
@@ -158,6 +168,7 @@ const mapState = (state) => ({
 const mapDispatch = (dispatch) => ({
   fetchProducts: () => dispatch(fetchProducts()),
   postProduct: (prodDets) => dispatch(postProduct(prodDets)),
+  deleteProduct: (id) => dispatch(deleteProduct(id)),
 });
 
 export default connect(mapState, mapDispatch)(AddProduct);

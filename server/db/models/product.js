@@ -32,7 +32,7 @@ const Product = db.define('product', {
 //hooks
 
 //format price before saving new instances to the DB
-Product.beforeValidate((product) => {
+Product.beforeSave((product) => {
   product.price = Math.floor(product.price * 100);
 });
 

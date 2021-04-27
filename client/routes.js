@@ -11,6 +11,8 @@ import Cart from './components/Cart';
 import Checkout from './components/Checkout';
 import admin from './components/admin';
 import EditProduct from './components/EditProduct';
+import AllUsers from './components/AllUsers';
+import AddProduct from './components/AddProduct';
 
 /**
  * COMPONENT
@@ -44,6 +46,8 @@ class Routes extends Component {
             <Route path="/checkout" component={Checkout} />
             <Route exact path="/admin" component={admin} />
             <Route path="/admin/products/:id" component={EditProduct} />
+            <Route path="/admin/users" component={AllUsers} />
+            <Route path="/admin/addProduct" component={AddProduct} />
           </Switch>
         ) : (
           <Switch>

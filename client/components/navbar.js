@@ -19,7 +19,7 @@ const Navbar = ({ handleClick, isLoggedIn, cart, isAdmin }) => (
             My Cart{' '}
             {cart.reduce((total, current) => (total += current.quantity), 0)}
           </Link>
-          {isAdmin ? <Link to="/admin">Admin</Link> : <br></br>};
+          {isAdmin ? <Link to="/admin">Admin</Link> : <br></br>}
         </div>
       ) : (
         <div>
