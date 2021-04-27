@@ -27,6 +27,9 @@ const Product = db.define('product', {
     type: Sequelize.INTEGER,
     defaultValue: 10,
   },
+  flavor: {
+    type: Sequelize.STRING,
+  },
 });
 
 module.exports = Product;

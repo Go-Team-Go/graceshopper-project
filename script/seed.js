@@ -40,24 +40,27 @@ async function seed() {
       description: 'a delicious raspberry drink',
       imageUrl:
         'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F23%2F2021%2F01%2F04%2FChambord-cocktails-2000.jpg',
-      price: 1000,
+      price: 1100,
       quantity: 10,
+      flavor: 'sweet',
     },
     {
       name: 'Garden Booch',
       description: 'a delicious mojito',
       imageUrl:
         'https://images.ctfassets.net/b0q5etab7zkl/3nhNtBkB1equESuWm8IeoM/675cf4b86d42c93a761146d3836559e9/Garden_Booch-tinyjpg.jpg?fm=jpg&q=90&w=800&h=1120&fit=fill',
-      price: 1000,
+      price: 1200,
       quantity: 10,
+      flavor: 'sweet',
     },
     {
       name: 'Spice Panoma',
       description: 'a delicious Manhattan',
       imageUrl:
         'https://images.ctfassets.net/b0q5etab7zkl/3lgiCta6EosQZRjLLn5n8F/65c43983a7dc94e6e977b632623b4499/Spice_PaNoma.jpg?fm=jpg&q=90&w=800&h=1120&fit=fill',
-      price: 1000,
+      price: 900,
       quantity: 10,
+      flavor: 'dry',
     },
     {
       name: 'Espresso Martini',
@@ -66,22 +69,25 @@ async function seed() {
         'https://images.ctfassets.net/b0q5etab7zkl/2lSsuxgBOgwKGuuWsUYYMe/8fd1096ef2a496e2536c69d07577cce3/Espresso_Martino-tinyjpg.jpg?fm=jpg&q=90&w=800&h=1120&fit=fill',
       price: 1000,
       quantity: 10,
+      flavor: 'dry',
     },
     {
       name: 'Margarita',
       description: 'a delicious margarita',
       imageUrl:
         'https://images.ctfassets.net/b0q5etab7zkl/3D3G1QG2Z9Fk6M7bEZCWQl/f0a1959f00229c03854baf5822314d01/Grove_42_Margarita_cocktail_only.jpg?fm=jpg&q=90&w=800&h=1120&fit=fill',
-      price: 1000,
+      price: 700,
       quantity: 10,
+      flavor: 'sweet',
     },
     {
       name: 'Ginger Pumpkin',
       description: 'a delicious Ginger Pumpkin',
       imageUrl:
         'https://images.ctfassets.net/b0q5etab7zkl/5wGt6giEJsJGjFB8TX3JAe/48ddd963d041e5c103151c748e66ca7f/Spice_94_Ginger_Pumpkin_Soda.jpg?fm=jpg&q=90&w=800&h=1120&fit=fill',
-      price: 1000,
+      price: 800,
       quantity: 10,
+      flavor: 'sweet',
     },
     {
       name: 'Rosemary Booch',
@@ -90,30 +96,34 @@ async function seed() {
         'https://images.ctfassets.net/b0q5etab7zkl/26yrQskXtqm2SeSE2mUIOo/846d8e041800f157bba35505678c5629/Rosemary_Booch.png?fm=jpg&q=90&w=800&h=1120&fit=fill',
       price: 1000,
       quantity: 10,
+      flavor: 'dry',
     },
     {
       name: 'Sour Blossom',
       description: 'a delicious Sour Blossom',
       imageUrl:
         'https://media.seedlipdrinks.com/PR1802/media/i1wmenp3/sour-blossom.jpg?width=475&height=900&mode=crop',
-      price: 1000,
+      price: 1200,
       quantity: 10,
+      flavor: 'dry',
     },
     {
       name: 'Grove Tonic',
       description: 'a delicious Grove Tonic',
       imageUrl:
         'https://images.ctfassets.net/b0q5etab7zkl/5C14WUx5TyOWy0mmMSqQys/0a73fa0d423e3d2b870fd14b1d3bb1ce/Grove_Tonic.jpg?fm=jpg&q=90&w=800&h=1120&fit=fill',
-      price: 1000,
+      price: 850,
       quantity: 10,
+      flavor: 'dry',
     },
     {
       name: 'Garden Sour',
       description: 'a delicious Garden Sour',
       imageUrl:
         'https://media.seedlipdrinks.com/PR1802/media/gd1pyhux/garden-sour.jpg?width=475&height=900&mode=crop',
-      price: 1000,
+      price: 1150,
       quantity: 10,
+      flavor: 'dry',
     },
   ];
 
@@ -125,21 +135,21 @@ async function seed() {
       productId: 1,
       quantity: 1,
       name: 'Raspberry Chambord',
-      price: 1000,
+      price: 1100,
     },
     {
       userId: 2,
       productId: 2,
       quantity: 1,
       name: 'Garden Booch',
-      price: 1000,
+      price: 1200,
     },
     {
       userId: 1,
       productId: 3,
       quantity: 1,
       name: 'Spice Panoma',
-      price: 1000,
+      price: 900,
     },
     {
       userId: 2,
