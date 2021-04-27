@@ -109,9 +109,6 @@ class Cart extends React.Component {
             return (total += subtotal);
           }, 0)}
         </div>
-        {/* <form action="/checkout">
-          <input type="submit" value="Checkout" onClick={this.handleCheckout} />
-        </form> */}
         <Link to={'/checkout'}>
           <button type="button" onClick={this.handleCheckout}>
             Checkout
