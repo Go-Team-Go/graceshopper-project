@@ -94,16 +94,17 @@ class ProductFilters extends React.Component {
           <button type="submit">apply filter</button>
         </form>
         <form onSubmit={this.handleSort} name="sortParam">
+          <label htmlFor="sortParam">sort by price</label>
           <select
             name="sortParam"
             value={this.state.sortParam}
             onChange={this.handleChange}
           >
             <option value="UNSORTED">---------</option>
-            <option value={PRICE_LOW}>Price Low to High</option>
-            <option value={PRICE_HIGH}>Price High to Low</option>
+            <option value={PRICE_LOW}>Low to High</option>
+            <option value={PRICE_HIGH}>High to Low</option>
           </select>
-          <button type="submit">sort</button>
+          <button type="submit">apply</button>
         </form>
         <button type="button" onClick={this.handleReset}>
           reset
