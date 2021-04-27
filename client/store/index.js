@@ -7,6 +7,7 @@ import singleProduct from './singleProduct';
 import allProducts from './products';
 import cart from './cart';
 import adminReducer from './admin';
+import sortAndFilter from './sortAndFilter';
 
 const reducer = combineReducers({
   auth,
@@ -14,6 +15,7 @@ const reducer = combineReducers({
   singleProduct,
   cart,
   adminReducer,
+  sortAndFilter,
 });
 
 const middleware = composeWithDevTools(
