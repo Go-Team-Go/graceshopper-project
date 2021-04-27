@@ -7,6 +7,7 @@ const ADD_TO_USER_CART = 'ADD_TO_USER_CART';
 const UPDATE_CART = 'UPDATE_CART';
 const UPDATE_USER_CART = 'UPDATE_USER_CART';
 const DELETE_ITEM = 'DELETE_ITEM';
+const DELETE_USER_ITEM = 'DELETE_USER_ITEM';
 const TOKEN = 'token';
 const CART = 'tempcart';
 const PURCHASE_CART = 'PURCHASE_CART';
@@ -27,6 +28,13 @@ export const purchaseCart = (cart) => {
 export const deletedItem = (item) => {
   return {
     type: DELETE_ITEM,
+    item,
+  };
+};
+
+export const deletedUserItem = (item) => {
+  return {
+    type: DELETE_USER_ITEM,
     item,
   };
 };
@@ -79,7 +87,7 @@ export const deleteItem = (item) => {
           },
         },
       );
-      dispatch(deletedItem(removedItem));
+      dispatch(deletedUserItem(removedItem));
     } catch (error) {
       console.log(error);
     }
@@ -148,20 +156,12 @@ export default function (state = initState, action) {
       case SET_CART:
         return action.cart;
       case ADD_TO_CART:
-        if (existingItem) {
-          existingItem.quantity += action.item.quantity;
-          updateStorage(state);
-          return [...state];
-        } else {
-          state = [...state, action.item];
-          updateStorage(state);
-          return state;
-        }
+        state = [...state, action.item];
+        updateStorage(state);
+        return state;
+
       case ADD_TO_USER_CART:
-        if (existingItem) {
-          existingItem.quantity = action.item.quantity;
-          return [...state];
-        } else return [...state, action.item];
+        return [...state, action.item];
       case UPDATE_CART:
         existingItem.quantity = action.item.newQuantity;
         updateStorage(state);
@@ -169,6 +169,8 @@ export default function (state = initState, action) {
       case UPDATE_USER_CART:
         existingItem.quantity = action.item.quantity;
         return [...state];
+      case DELETE_USER_ITEM:
+        return state.filter((item) => item.productId !== action.item.productId);
       case DELETE_ITEM:
         state = state.filter(
           (item) => item.productId !== action.item.productId,
