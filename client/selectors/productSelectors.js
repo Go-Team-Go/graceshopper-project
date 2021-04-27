@@ -1,11 +1,11 @@
 import { createSelector } from 'reselect';
 
-const PRICE_HIGH = 'PRICE_HIGH';
-const PRICE_LOW = 'PRICE_LOW';
-const OVER_TEN = 'OVER_TEN';
-const UNDER_TEN = 'UNDER_TEN';
-const SWEET = 'SWEET';
-const DRY = 'DRY';
+export const PRICE_HIGH = 'PRICE_HIGH';
+export const PRICE_LOW = 'PRICE_LOW';
+export const OVER_TEN = 'OVER_TEN';
+export const UNDER_TEN = 'UNDER_TEN';
+export const SWEET = 'SWEET';
+export const DRY = 'DRY';
 
 const getProducts = (state) => state.allProducts;
 const getSort = (state) => state.sortAndFilter.sortParam;
@@ -16,32 +16,31 @@ const getSortedProducts = createSelector(
   (param, products) => {
     switch (param) {
       case PRICE_HIGH:
-        return products.sort((a, b) => b.price - a.price);
+        return [...products].sort((a, b) => Number(b.price) - Number(a.price));
       case PRICE_LOW:
-        return products.sort((a, b) => a.price - b.price);
+        return [...products].sort((a, b) => Number(a.price) - Number(b.price));
       default:
-        return products;
+        return [...products].sort((a, b) => a.id - b.id);
     }
   },
 );
 
 const getFilteredProducts = createSelector(
   [getFilter, getSortedProducts],
-  (filter,
-  (products) => {
+  (filter, products) => {
     switch (filter) {
       case OVER_TEN:
-        return products.filter((product) => product.price >= 10);
+        return products.filter((product) => product.price >= 1000);
       case UNDER_TEN:
-        return products.filter(product.price < 10);
+        return products.filter((product) => product.price < 1000);
       case SWEET:
-        return products.filter(product.flavor === 'sweet');
+        return products.filter((product) => product.flavor === 'sweet');
       case DRY:
-        return products.filter(product.flavor === 'dry');
+        return products.filter((product) => product.flavor === 'dry');
       default:
         return products;
     }
-  }),
+  },
 );
 
 export default getFilteredProducts;

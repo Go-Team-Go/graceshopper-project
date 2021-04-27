@@ -10,7 +10,7 @@ import {
   DRY,
 } from '../selectors/productSelectors';
 
-initState = {
+const initState = {
   filter: 'ALL',
   sortParam: 'UNSORTED',
 };
@@ -59,7 +59,7 @@ class ProductFilters extends React.Component {
             value={this.state.filter}
             onChange={this.handleChange}
           >
-            <option value="ALL">ALL</option>
+            <option value="ALL">---------</option>
             <option value={OVER_TEN}>Over $10</option>
             <option value={UNDER_TEN}>Under $10</option>
             <option value={SWEET}>Sweet</option>
@@ -73,9 +73,9 @@ class ProductFilters extends React.Component {
             value={this.state.sortParam}
             onChange={this.handleChange}
           >
-            <option value="UNSORTED">Unsorted</option>
-            <option value={PRICE_LOW}>Price Low `{'>'}` High</option>
-            <option value={PRICE_HIGH}>Price High `{'>'}` Low</option>
+            <option value="UNSORTED">---------</option>
+            <option value={PRICE_LOW}>Price Low to High</option>
+            <option value={PRICE_HIGH}>Price High to Low</option>
           </select>
           <button type="submit">sort</button>
         </form>
@@ -101,4 +101,4 @@ const mapDispatch = (dispatch) => {
     clear: () => dispatch(clear()),
   };
 };
-export default connect(null, mapDispatch)(ProductFilter);
+export default connect(null, mapDispatch)(ProductFilters);

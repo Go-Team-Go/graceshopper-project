@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchProducts } from '../store/products';
-import { setCart, fetchCart } from '../store/cart';
 import { Link } from 'react-router-dom';
-import ProductFilter from './ProductFilter';
+import ProductFilters from './ProductFilter';
+import getFilteredProducts from '../selectors/productSelectors';
 
 export class AllProducts extends React.Component {
   componentDidMount() {
@@ -14,7 +14,7 @@ export class AllProducts extends React.Component {
     const { products } = this.props;
     return (
       <div>
-        <ProductFilter />
+        <ProductFilters />
         {products.length ? (
           products.map((product) => (
             <div key={product.id}>
@@ -40,7 +40,7 @@ export class AllProducts extends React.Component {
 }
 
 const mapState = (state) => ({
-  products: state.allProducts,
+  products: getFilteredProducts(state),
 });
 
 const mapDispatch = (dispatch) => ({
