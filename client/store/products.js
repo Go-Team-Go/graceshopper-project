@@ -4,6 +4,7 @@ import axios from 'axios';
 const TOKEN = 'token';
 const SET_PRODUCTS = 'SET_PRODUCTS';
 const ADD_PRODUCT = 'ADD_PRODUCT';
+const DELETE_PRODUCT = 'DELETE_PRODUCT';
 
 //action creator
 

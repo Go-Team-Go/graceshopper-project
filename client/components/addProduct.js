@@ -7,8 +7,8 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-
 import { fetchProducts, postProduct } from '../store/products';
+import { Link } from 'react-router-dom';
 
 const initialState = {
   name: '',
@@ -24,6 +24,7 @@ export class AddProduct extends React.Component {
     this.state = initialState;
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    //this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -41,16 +42,21 @@ export class AddProduct extends React.Component {
     this.props.postProduct(this.state);
 
     this.setState(initialState);
-    //this.props.fetchProducts();
+    this.props.fetchProducts();
     //this.forceUpdate();
   }
 
+  //handleDelete
+
   render() {
     const { products } = this.props;
-    console.log(this.state);
 
     return (
       <div>
+        <p>Admin Console</p>
+        <div>
+          <h3>Add A New Cocktail</h3>
+        </div>
         <div>
           <form onSubmit={this.handleSubmit} name={name}>
             <div>
@@ -115,7 +121,7 @@ export class AddProduct extends React.Component {
         </div>
 
         <div>
-          <h2>Cocktail Inventory</h2>
+          <h3>Cocktail Inventory</h3>
           <div>
             {products.length ? (
               products.map((product) => (
@@ -123,7 +129,9 @@ export class AddProduct extends React.Component {
                   <img src={product.imageUrl} alt={product.name} />
                   <h4>{product.name}</h4>
                   <p>${product.price / 100}</p>
-                  <button>Edit Cocktail</button>
+                  <Link to={`/admin/products/${product.id}`}>
+                    <button>Edit Cocktail</button>
+                  </Link>
                   <button>Delete Cocktail</button>
                 </div>
               ))

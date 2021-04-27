@@ -1,23 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import AddProduct from './AddProduct'
+import AddProduct from './AddProduct';
+import { Link } from 'react-router-dom';
 
 /**
  * COMPONENT
  */
 export const Admin = (props) => {
-
-
   return (
-    <div class="admin-dropdown">
-      <p class="dropbtn">Admin</p>
-        <div class="dropdown-content">
-          {/* add a links to each component here */}
-          <AddProduct />
-          {/* <DeleteProduct />
-          <EditProduct /> */}
+    <div className="admin-dropdown">
+      <p className="dropbtn">Admin Console</p>
+      <div className="dropdown-content">
+        {/* add a links to each component here */}
+        <AddProduct />
 
-        </div>
+        {/* <DeleteProduct />
+          <EditProduct /> */}
+      </div>
     </div>
   );
 };
@@ -25,10 +24,11 @@ export const Admin = (props) => {
 /**
  * CONTAINER
  */
+
 const mapState = (state) => {
   return {
-    products: state.allProducts
-    users: state.allUsers
+    products: state.allProducts,
+    users: state.allUsers,
   };
 };
 

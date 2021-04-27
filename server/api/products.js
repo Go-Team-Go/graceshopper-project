@@ -72,6 +72,12 @@ router.put('/:id', requireToken, isAdmin, async (req, res, next) => {
     if (!productInst) {
       res.status(404).send('Product was not found in the database');
     }
+
+    console.log(
+      '/PUT api/products/:id =========================>>>>>>>>>>',
+      req.body,
+    );
+
     await productInst.update({ name, description, imageUrl, price, quantity });
     res.send(productInst);
   } catch (err) {
