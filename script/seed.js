@@ -42,7 +42,7 @@ async function seed() {
         'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F23%2F2021%2F01%2F04%2FChambord-cocktails-2000.jpg',
       price: 1100,
       quantity: 10,
-      flavor: 'sweet',
+      alcoholType: 'gin',
     },
     {
       name: 'Garden Booch',
@@ -51,7 +51,7 @@ async function seed() {
         'https://images.ctfassets.net/b0q5etab7zkl/3nhNtBkB1equESuWm8IeoM/675cf4b86d42c93a761146d3836559e9/Garden_Booch-tinyjpg.jpg?fm=jpg&q=90&w=800&h=1120&fit=fill',
       price: 1200,
       quantity: 10,
-      flavor: 'sweet',
+      alcoholType: 'vodka',
     },
     {
       name: 'Spice Panoma',
@@ -60,7 +60,7 @@ async function seed() {
         'https://images.ctfassets.net/b0q5etab7zkl/3lgiCta6EosQZRjLLn5n8F/65c43983a7dc94e6e977b632623b4499/Spice_PaNoma.jpg?fm=jpg&q=90&w=800&h=1120&fit=fill',
       price: 900,
       quantity: 10,
-      flavor: 'dry',
+      alcoholType: 'rum',
     },
     {
       name: 'Espresso Martini',
@@ -69,7 +69,7 @@ async function seed() {
         'https://images.ctfassets.net/b0q5etab7zkl/2lSsuxgBOgwKGuuWsUYYMe/8fd1096ef2a496e2536c69d07577cce3/Espresso_Martino-tinyjpg.jpg?fm=jpg&q=90&w=800&h=1120&fit=fill',
       price: 1000,
       quantity: 10,
-      flavor: 'dry',
+      alcoholType: 'gin',
     },
     {
       name: 'Margarita',
@@ -78,7 +78,7 @@ async function seed() {
         'https://images.ctfassets.net/b0q5etab7zkl/3D3G1QG2Z9Fk6M7bEZCWQl/f0a1959f00229c03854baf5822314d01/Grove_42_Margarita_cocktail_only.jpg?fm=jpg&q=90&w=800&h=1120&fit=fill',
       price: 700,
       quantity: 10,
-      flavor: 'sweet',
+      alcoholType: 'tequila',
     },
     {
       name: 'Ginger Pumpkin',
@@ -87,7 +87,7 @@ async function seed() {
         'https://images.ctfassets.net/b0q5etab7zkl/5wGt6giEJsJGjFB8TX3JAe/48ddd963d041e5c103151c748e66ca7f/Spice_94_Ginger_Pumpkin_Soda.jpg?fm=jpg&q=90&w=800&h=1120&fit=fill',
       price: 800,
       quantity: 10,
-      flavor: 'sweet',
+      alcoholType: 'rum',
     },
     {
       name: 'Rosemary Booch',
@@ -96,7 +96,7 @@ async function seed() {
         'https://images.ctfassets.net/b0q5etab7zkl/26yrQskXtqm2SeSE2mUIOo/846d8e041800f157bba35505678c5629/Rosemary_Booch.png?fm=jpg&q=90&w=800&h=1120&fit=fill',
       price: 1000,
       quantity: 10,
-      flavor: 'dry',
+      alcoholType: 'vodka',
     },
     {
       name: 'Sour Blossom',
@@ -105,7 +105,7 @@ async function seed() {
         'https://media.seedlipdrinks.com/PR1802/media/i1wmenp3/sour-blossom.jpg?width=475&height=900&mode=crop',
       price: 1200,
       quantity: 10,
-      flavor: 'dry',
+      alcoholType: 'vodka',
     },
     {
       name: 'Grove Tonic',
@@ -114,7 +114,7 @@ async function seed() {
         'https://images.ctfassets.net/b0q5etab7zkl/5C14WUx5TyOWy0mmMSqQys/0a73fa0d423e3d2b870fd14b1d3bb1ce/Grove_Tonic.jpg?fm=jpg&q=90&w=800&h=1120&fit=fill',
       price: 850,
       quantity: 10,
-      flavor: 'dry',
+      alcoholType: 'vodka',
     },
     {
       name: 'Garden Sour',
@@ -123,7 +123,7 @@ async function seed() {
         'https://media.seedlipdrinks.com/PR1802/media/gd1pyhux/garden-sour.jpg?width=475&height=900&mode=crop',
       price: 1150,
       quantity: 10,
-      flavor: 'dry',
+      alcoholType: 'tequila',
     },
   ];
 

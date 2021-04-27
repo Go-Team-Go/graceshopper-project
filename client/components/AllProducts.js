@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { fetchProducts } from '../store/products';
 import { Link } from 'react-router-dom';
 import ProductFilters from './ProductFilter';
-import getFilteredProducts from '../selectors/productSelectors';
+import getSortedProducts from '../selectors/productSelectors';
 
 export class AllProducts extends React.Component {
   componentDidMount() {
@@ -40,7 +40,7 @@ export class AllProducts extends React.Component {
 }
 
 const mapState = (state) => ({
-  products: getFilteredProducts(state),
+  products: getSortedProducts(state),
 });
 
 const mapDispatch = (dispatch) => ({

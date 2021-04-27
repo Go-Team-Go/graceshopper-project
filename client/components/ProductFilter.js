@@ -1,17 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setFilter, setSortParam, clear } from '../store/sortAndFilter';
+import {
+  setPriceFilter,
+  setAlcoholFilter,
+  setSortParam,
+  clear,
+} from '../store/sortAndFilter';
 import {
   PRICE_HIGH,
   PRICE_LOW,
   OVER_TEN,
   UNDER_TEN,
-  SWEET,
-  DRY,
+  GIN,
+  TEQUILA,
+  VODKA,
+  RUM,
 } from '../selectors/productSelectors';
 
 const initState = {
-  filter: 'ALL',
+  priceFilter: 'ALL',
+  alcoholFilter: 'ALL',
   sortParam: 'UNSORTED',
 };
 
@@ -31,7 +39,11 @@ class ProductFilters extends React.Component {
 
   handleFilter(evt) {
     evt.preventDefault();
-    this.props.setFilter(this.state.filter);
+    if (evt.target.name === 'priceFilter') {
+      this.props.setPriceFilter(this.state.priceFilter);
+    } else {
+      this.props.setAlcoholFilter(this.state.alcoholFilter);
+    }
   }
 
   handleSort(evt) {
@@ -53,19 +65,33 @@ class ProductFilters extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleFilter} name="filter">
+        <form onSubmit={this.handleFilter} name="priceFilter">
+          <label htmlFor="priceFilter">filter by price</label>
           <select
-            name="filter"
-            value={this.state.filter}
+            name="priceFilter"
+            value={this.state.priceFilter}
             onChange={this.handleChange}
           >
-            <option value="ALL">---------</option>
+            <option value="ALL">All</option>
             <option value={OVER_TEN}>Over $10</option>
             <option value={UNDER_TEN}>Under $10</option>
-            <option value={SWEET}>Sweet</option>
-            <option value={DRY}>Dry</option>
           </select>
-          <button type="submit">filter</button>
+          <button type="submit">apply filter</button>
+        </form>
+        <form onSubmit={this.handleFilter} name="alcoholFilter">
+          <label htmlFor="alcoholFilter">filter by alcohol type</label>
+          <select
+            name="alcoholFilter"
+            value={this.state.alcoholFilter}
+            onChange={this.handleChange}
+          >
+            <option value="ALL">All</option>
+            <option value={GIN}>Gin</option>
+            <option value={TEQUILA}>Tequila</option>
+            <option value={VODKA}>Vodka</option>
+            <option value={RUM}>Rum</option>
+          </select>
+          <button type="submit">apply filter</button>
         </form>
         <form onSubmit={this.handleSort} name="sortParam">
           <select
@@ -87,16 +113,10 @@ class ProductFilters extends React.Component {
   }
 }
 
-// const mapState = (state) => {
-//   return {
-//     filter: state.sortAndFilter.filter,
-//     sortParam: state.sortAndFilter.sortParam,
-//   };
-// };
-
 const mapDispatch = (dispatch) => {
   return {
-    setFilter: (filter) => dispatch(setFilter(filter)),
+    setPriceFilter: (filter) => dispatch(setPriceFilter(filter)),
+    setAlcoholFilter: (filter) => dispatch(setAlcoholFilter(filter)),
     setSortParam: (param) => dispatch(setSortParam(param)),
     clear: () => dispatch(clear()),
   };

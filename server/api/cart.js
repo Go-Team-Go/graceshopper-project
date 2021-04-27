@@ -31,9 +31,6 @@ router.get('/history', requireToken, async (req, res, next) => {
   }
 });
 
-//POST /api/cart/
-//will have to separate post and put routes here
-
 router.post('/', requireToken, async (req, res, next) => {
   try {
     const user = req.user;

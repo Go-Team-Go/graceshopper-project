@@ -27,7 +27,7 @@ const Product = db.define('product', {
     type: Sequelize.INTEGER,
     defaultValue: 10,
   },
-  flavor: {
+  alcoholType: {
     type: Sequelize.STRING,
   },
 });
