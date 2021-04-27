@@ -16,10 +16,6 @@ export const Admin = (props) => {
       <div>
         <Link to={'/admin/addProduct'}>Products</Link>
       </div>
-      {/* <Switch>
-        <Route path="/admin/users" component={AllUsers} />
-        <Route path="/admin/addProduct" component={AddProduct} />
-      </Switch> */}
     </div>
   );
 };

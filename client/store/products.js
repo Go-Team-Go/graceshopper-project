@@ -63,9 +63,7 @@ export const deleteProduct = (id) => {
         headers: { authorization: token },
       });
 
-      console.log('id from the thunk _____>>>>>>>>', typeof id, id);
       dispatch(deletedProduct(id));
-      console.log('the thunk dispatch happened.');
     } catch (err) {
       console.log('Error deleting this products');
     }
@@ -83,7 +81,7 @@ export default function allProducts(state = [], action) {
     case DELETE_PRODUCT:
       //INTERATE over the and filter out only the object by its it
       return state.filter((prod) => {
-        return prod.id !== action.prodId;
+        return prod.id !== Number(action.prodId);
       });
     default:
       return state;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { updateProduct, getProduct } from '../store/singleProduct';
+import { Link } from 'react-router-dom';
 
 const initialState = {
   name: '',
@@ -45,7 +46,7 @@ export class EditProduct extends React.Component {
 
     return (
       <div>
-        <p>Admin Console</p>
+        <Link to={'/admin/addProduct'}>Cocktail Inventory</Link>
         <div>
           <h3>Edit Cocktail</h3>
         </div>

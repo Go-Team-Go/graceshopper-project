@@ -55,11 +55,6 @@ export class AddProduct extends React.Component {
   render() {
     const { products } = this.props;
 
-    console.log(
-      'this.props from the the render func --------><><<><><><<><',
-      this.props,
-    );
-
     return (
       <div>
         <p>Admin Console</p>
