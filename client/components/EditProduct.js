@@ -120,7 +120,6 @@ export class EditProduct extends React.Component {
                   defaultValue="1"
                   ref={this.input}
                 ></input>
-                <button type="submit">add to cart</button>
               </form>
             </div>
           ) : (
