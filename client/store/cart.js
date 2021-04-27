@@ -18,10 +18,9 @@ const updateStorage = (item) => {
 
 //action creator
 
-export const purchaseCart = (cart) => {
+export const purchaseCart = () => {
   return {
     type: PURCHASE_CART,
-    cart,
   };
 };
 
@@ -74,6 +73,22 @@ export const setCart = (cart) => {
 };
 
 //thunk creator
+
+export const purchaseUserCart = (cart) => {
+  return async (dispatch) => {
+    try {
+      const token = window.localStorage.getItem(TOKEN);
+      const { data: userCart } = await axios.put(`/api/cart`, cart, {
+        headers: {
+          authorization: token,
+        },
+      });
+      dispatch(purchaseCart());
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
 
 export const deleteItem = (item) => {
   return async (dispatch) => {
@@ -178,8 +193,7 @@ export default function (state = initState, action) {
         updateStorage(state);
         return state;
       case PURCHASE_CART:
-        state = state.forEach((item) => item.purchased === true);
-        return state;
+        return initState;
       default:
         return state;
     }
