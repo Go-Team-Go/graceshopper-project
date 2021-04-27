@@ -78,7 +78,7 @@ export const purchaseUserCart = (cart) => {
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem(TOKEN);
-      const { data: userCart } = await axios.put(`/api/cart`, cart, {
+      const { data: userCart } = await axios.put(`/api/cart/checkout`, cart, {
         headers: {
           authorization: token,
         },

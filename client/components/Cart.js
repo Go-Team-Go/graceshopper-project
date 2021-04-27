@@ -58,7 +58,7 @@ class Cart extends React.Component {
 
   handleCheckout() {
     if (token) {
-      this.props.purchaseUserCart();
+      this.props.purchaseUserCart(this.props.cart);
     } else {
       this.props.purchase();
     }
