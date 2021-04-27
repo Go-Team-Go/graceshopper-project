@@ -1,86 +1,143 @@
 //this component should have a form to add a new product and should list all the products.
-  // each product should have an edit and delete button next to it
-    // DELETE - when clicked goes to a new page with image and "Delete This" this button
-      // when "Delete This" button is clicked the product is removed and redirected to AddProduct component
-    // Edit - when clicked goes to a new page with image and form with item view
-      // when content is editted and submit is clicked the product is updated with new information
+// each product should have an edit and delete button next to it
+// DELETE - when clicked goes to a new page with image and "Delete This" this button
+// when "Delete This" button is clicked the product is removed and redirected to AddProduct component
+// Edit - when clicked goes to a new page with image and form with item view
+// when content is editted and submit is clicked the product is updated with new information
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { fetchProducts, postProduct, deleteProduct } from '../store/products';
+import { Link } from 'react-router-dom';
 
+const initialState = {
+  name: '',
+  description: '',
+  imageUrl: '',
+  price: parseInt(''),
+  quantity: parseInt(''),
+};
 
 export class AddProduct extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    state = {
-      name: '',
-      description: '',
-      imageUrl: '',
-      price: Number(''),
-      quantity: Number(''),
-    }
-    this.
+    this.state = initialState;
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
-  //handleSubmit --> new Product
+  componentDidMount() {
+    this.props.fetchProducts();
+  }
 
-  render(){
+  handleChange() {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.props.postProduct(this.state);
+
+    this.setState(initialState);
+    // this.props.fetchProducts();
+    event.target.reset();
+  }
+
+  handleDelete(event) {
+    const id = event.target.value;
+    this.props.deleteProduct(id);
+    //this.props.fetchProducts();
+  }
+
+  render() {
     const { products } = this.props;
-    console.log('products from the addProduct component:', products);
 
-
-    return(
+    return (
       <div>
+        <p>Admin Console</p>
         <div>
-            <form onSubmit={handleSubmit} name={name}>
-              <div>
-                <label htmlFor="name">
-                  <small>Product Name</small>
-                </label>
-                <input name="name" type="text" required/>
-              </div>
-              <div>
-                <label htmlFor="description">
-                  <small>Product Description</small>
-                </label>
-                <input name="description" type="text" />
-              </div>
-              <div>
-                <label htmlFor="imageUrl">
-                  <small>Image URL</small>
-                </label>
-                <input name="imageUrl" type="url" />
-              </div>
-              <div>
-                <label htmlFor="price">
-                  <small>Price of Cocktail: </small>
-                </label>
-                <input name="price" type="number" placeholder="e.g.10.99" step="0.01" min="0" />
-              </div>
-              <div>
-                <label htmlFor="quantity">
-                  <small>Quantity of Product:</small>
-                </label>
-                <input name="quantity" type="number" placeholder="e.g.10" step="1" min="0" />
-              </div>
-              <div>
-                <button type="submit">Submit</button>
-              </div>
-            {/* {error && error.response && <div> {error.response.data} </div>} */}
+          <h3>Add A New Cocktail</h3>
+        </div>
+        <div>
+          <form onSubmit={this.handleSubmit} name={name}>
+            <div>
+              <label htmlFor="name">
+                <small>Product Name</small>
+              </label>
+              <input
+                onChange={this.handleChange}
+                name="name"
+                type="text"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="description">
+                <small>Product Description</small>
+              </label>
+              <input
+                onChange={this.handleChange}
+                name="description"
+                type="text"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="imageUrl">
+                <small>Image URL</small>
+              </label>
+              <input onChange={this.handleChange} name="imageUrl" type="url" />
+            </div>
+            <div>
+              <label htmlFor="price">
+                <small>Price of Cocktail: </small>
+              </label>
+              <input
+                onChange={this.handleChange}
+                name="price"
+                type="number"
+                placeholder="e.g.10.99"
+                step="0.01"
+                min="0"
+              />
+            </div>
+            <div>
+              <label htmlFor="quantity">
+                <small>Quantity of Product:</small>
+              </label>
+              <input
+                onChange={this.handleChange}
+                name="quantity"
+                type="number"
+                placeholder="e.g.10"
+                step="1"
+                min="0"
+              />
+            </div>
+            <div>
+              <button type="submit">Submit</button>
+            </div>
           </form>
         </div>
 
         <div>
-          <h2>Cocktails Available</h2>
+          <h3>Cocktail Inventory</h3>
           <div>
             {products.length ? (
-              products.map(product => (
+              products.map((product, ind) => (
                 <div key={product.id}>
                   <img src={product.imageUrl} alt={product.name} />
                   <h4>{product.name}</h4>
                   <p>${product.price / 100}</p>
-                  <button>Edit Cocktail</button>
-                  <button>Delete Cocktail</button>
+                  <Link to={`/admin/products/${product.id}`}>
+                    <button>Edit Cocktail</button>
+                  </Link>
+                  <button value={product.id} onClick={this.handleDelete}>
+                    Delete Cocktail
+                  </button>
                 </div>
               ))
             ) : (
@@ -94,21 +151,19 @@ export class AddProduct extends React.Component {
             )}
           </div>
         </div>
-
-
       </div>
-    )
+    );
   }
 }
 
-
-
 const mapState = (state) => ({
-  products: state.allProducts
+  products: state.allProducts,
 });
 
 const mapDispatch = (dispatch) => ({
-  postProduct: () => dispatch(postProduct(prodDets)),
+  fetchProducts: () => dispatch(fetchProducts()),
+  postProduct: (prodDets) => dispatch(postProduct(prodDets)),
+  deleteProduct: (id) => dispatch(deleteProduct(id)),
 });
 
 export default connect(mapState, mapDispatch)(AddProduct);

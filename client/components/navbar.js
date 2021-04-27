@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store';
 
-const Navbar = ({ handleClick, isLoggedIn, cart }) => (
+const Navbar = ({ handleClick, isLoggedIn, cart, isAdmin }) => (
   <div>
     <h1>FS-App-Template</h1>
     <nav>
@@ -19,6 +19,7 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => (
             My Cart{' '}
             {cart.reduce((total, current) => (total += current.quantity), 0)}
           </Link>
+          {isAdmin ? <Link to="/admin">Admin</Link> : <br></br>}
         </div>
       ) : (
         <div>
@@ -43,6 +44,7 @@ const Navbar = ({ handleClick, isLoggedIn, cart }) => (
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
+    isAdmin: state.auth.admin,
     cart: state.cart,
   };
 };

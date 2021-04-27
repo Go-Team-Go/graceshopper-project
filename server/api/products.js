@@ -29,6 +29,11 @@ router.get('/:id', async (req, res, next) => {
 //POST api/products       ---> add products
 router.post('/', requireToken, isAdmin, async (req, res, next) => {
   try {
+    console.log(
+      'req.body for the post api/products route===============>>>>>>>>>>>>>>$$$$$$',
+      req.body,
+    );
+
     const { name, description, imageUrl, price, quantity } = req.body;
     const product = await Product.create({
       name,
@@ -67,6 +72,12 @@ router.put('/:id', requireToken, isAdmin, async (req, res, next) => {
     if (!productInst) {
       res.status(404).send('Product was not found in the database');
     }
+
+    console.log(
+      '/PUT api/products/:id =========================>>>>>>>>>>',
+      req.body,
+    );
+
     await productInst.update({ name, description, imageUrl, price, quantity });
     res.send(productInst);
   } catch (err) {

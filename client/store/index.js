@@ -6,7 +6,7 @@ import auth from './auth';
 import singleProduct from './singleProduct';
 import allProducts from './products';
 import cart from './cart';
-import adminReducer from './admin';
+import allUsers from './users';
 import sortAndFilter from './sortAndFilter';
 
 const reducer = combineReducers({
@@ -14,7 +14,7 @@ const reducer = combineReducers({
   allProducts,
   singleProduct,
   cart,
-  adminReducer,
+  allUsers,
   sortAndFilter,
 });
 
