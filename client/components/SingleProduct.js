@@ -17,13 +17,6 @@ class SingleProduct extends React.Component {
     this.props.load(this.props.match.params.id);
   }
 
-  //return true or false
-  checkForProduct(id) {
-    let existingItem = state.filter((item) => {
-      return action.item.productId === item.productId;
-    })[0];
-  }
-
   handleSubmit(evt) {
     evt.preventDefault();
     const token = window.localStorage.getItem('token');
@@ -104,7 +97,7 @@ class SingleProduct extends React.Component {
 const mapState = (state) => {
   return {
     product: state.singleProduct,
-    //load the cart ----> to see if a selected id is selected again
+
     cart: state.cart,
   };
 };
@@ -112,9 +105,9 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     load: (id) => dispatch(getProduct(id)),
-    add: (item) => dispatch(addToCart(item)), //guest cart
-    addItem: (item) => dispatch(addToUserCart(item)), //user cart
-    updateUserCart: (item) => dispatch(updateUserCart(item)), //user put for cart
+    add: (item) => dispatch(addToCart(item)),
+    addItem: (item) => dispatch(addToUserCart(item)),
+    updateUserCart: (item) => dispatch(updateUserCart(item)),
     updateCart: (item) => dispatch(updateCart(item)),
   };
 };
