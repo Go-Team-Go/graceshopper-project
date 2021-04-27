@@ -29,6 +29,11 @@ router.get('/:id', async (req, res, next) => {
 //POST api/products       ---> add products
 router.post('/', requireToken, isAdmin, async (req, res, next) => {
   try {
+    console.log(
+      'req.body for the post api/products route===============>>>>>>>>>>>>>>$$$$$$',
+      req.body,
+    );
+
     const { name, description, imageUrl, price, quantity } = req.body;
     const product = await Product.create({
       name,

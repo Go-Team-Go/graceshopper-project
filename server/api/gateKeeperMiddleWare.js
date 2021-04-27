@@ -25,6 +25,13 @@ const isAdmin = async (req, res, next) => {
       .status(403)
       .send('Unauthorized: This user does not have admin access');
   } else {
+    console.log(
+      'req.user isAdmin Middleware in BE ------>>>>>',
+      req.user,
+      'req.user.admin --->:',
+      req.user.admin,
+    );
+
     next();
   }
 };
