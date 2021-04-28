@@ -67,53 +67,84 @@ class Cart extends React.Component {
   render() {
     const cart = this.props.cart || [];
     return (
-      <div>
+      <div className="container">
         {cart.length ? (
           cart.map((item) => (
-            <div key={item.productId}>
+            <div key={item.productId} className="card mb-3 col-10">
               <Link to={`/products/${item.productId}`}>
-                <h1>{item.name}</h1>
+                <h3 className="h3 card-header">{item.name}</h3>
               </Link>
-              {/* <img src={item.imageUrl}></img> */}
-              <p>In Cart: {item.quantity}</p>
-              <p>Subtotal: ${(item.price / 100) * item.quantity}</p>
-              <form onSubmit={this.handleSubmit} name={item.productId}>
-                <input
-                  type="number"
-                  name="quantity"
-                  min="0"
-                  defaultValue={item.quantity}
-                  ref={this.input}
-                ></input>
-                <button type="submit">update cart</button>
-              </form>
-              <button onClick={this.handleDelete} value={item.productId}>
-                Delete
-              </button>
+              <div className="card-body">
+                <Link to={`/products/${item.productId}`}>
+                  <img
+                    src={item.imageUrl}
+                    className="rounded float-start"
+                    width="100"
+                  />
+                </Link>
+                <div className="float-end">
+                  <p className="h5">In Cart: {item.quantity}</p>
+                  <form onSubmit={this.handleSubmit} name={item.productId}>
+                    <input
+                      type="number"
+                      name="quantity"
+                      min="0"
+                      defaultValue={item.quantity}
+                      ref={this.input}
+                      className="form-control-sm"
+                    ></input>
+                    <button type="submit" className="btn-sm btn-light">
+                      update cart
+                    </button>
+                  </form>
+
+                  <small className="text-muted col-12">
+                    Subtotal: ${(item.price / 100) * item.quantity}
+                  </small>
+                  <button
+                    onClick={this.handleDelete}
+                    value={item.productId}
+                    className="btn-sm btn-dark col-12"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
             </div>
           ))
         ) : (
           <div>
-            <h3>Nothing in the cart...</h3>
+            <h3 className="h3">Nothing in the cart...</h3>
           </div>
         )}
-        <br />
-        <div>
-          total items:{' '}
-          {cart.reduce((total, current) => (total += current.quantity), 0)}
+        <hr />
+        <div className="container">
+          <div className="float-start col-6">
+            <div className="h5 text-muted ">
+              total items:{' '}
+              {cart.reduce((total, current) => (total += current.quantity), 0)}
+            </div>
+
+            <div className="h2">
+              cart total: $
+              {cart.reduce((total, current) => {
+                const subtotal = (current.price / 100) * current.quantity;
+                return (total += subtotal);
+              }, 0)}
+            </div>
+          </div>
+          <div className="container">
+            <Link to={'/checkout'}>
+              <button
+                type="button"
+                onClick={this.handleCheckout}
+                className="btn-sm btn-dark col-6"
+              >
+                Checkout
+              </button>
+            </Link>
+          </div>
         </div>
-        <div>
-          cart total: $
-          {cart.reduce((total, current) => {
-            const subtotal = (current.price / 100) * current.quantity;
-            return (total += subtotal);
-          }, 0)}
-        </div>
-        <Link to={'/checkout'}>
-          <button type="button" onClick={this.handleCheckout}>
-            Checkout
-          </button>
-        </Link>
       </div>
     );
   }

@@ -46,92 +46,107 @@ export class EditProduct extends React.Component {
 
     return (
       <div>
-        <Link to={'/admin/addProduct'}>Cocktail Inventory</Link>
-        <div>
-          <h3>Edit Cocktail</h3>
+        <div className="mb-3">
+          <Link to={'/admin/addProduct'}> Back to Cocktail Inventory</Link>
         </div>
-        <form onSubmit={this.handleSubmit} name={name}>
-          <div>
-            <label htmlFor="name">
-              <small>Update Product Name</small>
-            </label>
-            <input onChange={this.handleChange} name="name" type="text" />
-          </div>
-          <div>
-            <label htmlFor="description">
-              <small>Update Product Description</small>
-            </label>
-            <input
-              onChange={this.handleChange}
-              name="description"
-              type="text"
-            />
-          </div>
-          <div>
-            <label htmlFor="imageUrl">
-              <small> Update Image URL</small>
-            </label>
-            <input onChange={this.handleChange} name="imageUrl" type="url" />
-          </div>
-          <div>
-            <label htmlFor="price">
-              <small>Update Price of Cocktail: </small>
-            </label>
-            <input
-              onChange={this.handleChange}
-              name="price"
-              type="number"
-              placeholder="e.g.10.99"
-              step="0.01"
-              min="0"
-            />
-          </div>
-          <div>
-            <label htmlFor="quantity">
-              <small>Update Quantity of Product:</small>
-            </label>
-            <input
-              onChange={this.handleChange}
-              name="quantity"
-              type="number"
-              placeholder="e.g.10"
-              step="1"
-              min="0"
-            />
-          </div>
-          <div>
-            <button type="submit">Submit Updates</button>
-          </div>
-        </form>
-
         <div>
-          {product.name ? (
-            <div>
-              <h1>{product.name}</h1>
-              <img src={product.imageUrl} />
-              <p>{product.description}</p>
-              <p>${product.price / 100}</p>
-              <p>{product.quantity}</p>
-              <form onSubmit={this.handleSubmit}>
+          <h3 className="h3">Edit Cocktail</h3>
+        </div>
+        <div className="container">
+          <div className="row">
+            <form onSubmit={this.handleSubmit} name={name} className="col">
+              <div>
+                <label htmlFor="name">
+                  <small>Update Product Name</small>
+                </label>
                 <input
+                  onChange={this.handleChange}
+                  name="name"
+                  type="text"
+                  className="form-control "
+                />
+              </div>
+              <div>
+                <label htmlFor="description">
+                  <small>Update Product Description</small>
+                </label>
+                <input
+                  onChange={this.handleChange}
+                  name="description"
+                  type="text"
+                  className="form-control "
+                />
+              </div>
+              <div>
+                <label htmlFor="imageUrl">
+                  <small> Update Image URL</small>
+                </label>
+                <input
+                  onChange={this.handleChange}
+                  name="imageUrl"
+                  type="url"
+                  className="form-control "
+                />
+              </div>
+              <div>
+                <label htmlFor="price">
+                  <small>Update Price of Cocktail: </small>
+                </label>
+                <input
+                  onChange={this.handleChange}
+                  name="price"
                   type="number"
+                  placeholder="e.g.10.99"
+                  step="0.01"
+                  min="0"
+                  className="form-control "
+                />
+              </div>
+              <div>
+                <label htmlFor="quantity">
+                  <small>Update Quantity of Product:</small>
+                </label>
+                <input
+                  onChange={this.handleChange}
                   name="quantity"
-                  min="1"
-                  defaultValue="1"
-                  ref={this.input}
-                ></input>
-                <button type="submit">add to cart</button>
-              </form>
+                  type="number"
+                  placeholder="e.g.10"
+                  step="1"
+                  min="0"
+                  className="form-control mb-3"
+                />
+              </div>
+              <div>
+                <button type="submit" className="btn btn-dark btn-lg">
+                  Submit Updates
+                </button>
+              </div>
+            </form>
+
+            <div className="col">
+              {product.name ? (
+                <div>
+                  <h1>{product.name}</h1>
+                  <img
+                    src={product.imageUrl}
+                    className="figure rounded"
+                    width="250"
+                  />
+                  <p className="h4">{product.description}</p>
+                  <p className="h4">${product.price / 100}</p>
+                  <p className="h4">{product.quantity}</p>
+                </div>
+              ) : (
+                <div>
+                  <h3>Loading...</h3>
+                  <img
+                    src="https://media4.giphy.com/media/h8fnSteH0zUrlMf291/giphy.gif"
+                    alt="loading"
+                  />
+                </div>
+              )}
             </div>
-          ) : (
-            <div>
-              <h3>Loading...</h3>
-              <img
-                src="https://media1.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
-                alt="loading"
-              />
-            </div>
-          )}
+          </div>
         </div>
       </div>
     );
