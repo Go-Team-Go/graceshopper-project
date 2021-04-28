@@ -40,7 +40,7 @@ export class AllProducts extends React.Component {
                     <img
                       src={product.imageUrl}
                       alt={product.name}
-                      className="card-img"
+                      className="card-img h-100"
                     />
                     <div className="card-img-overlay">
                       <h4 className="card-title">{product.name}</h4>
