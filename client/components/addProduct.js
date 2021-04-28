@@ -57,13 +57,16 @@ export class AddProduct extends React.Component {
 
     return (
       <div>
-        <p>Admin Console</p>
         <div>
           <h3>Add A New Cocktail</h3>
         </div>
         <div>
-          <form onSubmit={this.handleSubmit} name={name}>
-            <div>
+          <form
+            onSubmit={this.handleSubmit}
+            name={name}
+            className=" row justify-content-center"
+          >
+            <div className="mb-3 col">
               <label htmlFor="name">
                 <small>Product Name</small>
               </label>
@@ -72,9 +75,10 @@ export class AddProduct extends React.Component {
                 name="name"
                 type="text"
                 required
+                className="form-control col-7"
               />
             </div>
-            <div>
+            <div className="mb-3 col">
               <label htmlFor="description">
                 <small>Product Description</small>
               </label>
@@ -83,15 +87,21 @@ export class AddProduct extends React.Component {
                 name="description"
                 type="text"
                 required
+                className="form-control col-7"
               />
             </div>
-            <div>
+            <div className="mb-3 col">
               <label htmlFor="imageUrl">
                 <small>Image URL</small>
               </label>
-              <input onChange={this.handleChange} name="imageUrl" type="url" />
+              <input
+                onChange={this.handleChange}
+                name="imageUrl"
+                type="url"
+                className="form-control col-7"
+              />
             </div>
-            <div>
+            <div className="mb-3 col">
               <label htmlFor="price">
                 <small>Price of Cocktail: </small>
               </label>
@@ -102,9 +112,10 @@ export class AddProduct extends React.Component {
                 placeholder="e.g.10.99"
                 step="0.01"
                 min="0"
+                className="form-control col-7"
               />
             </div>
-            <div>
+            <div className="mb-3 col">
               <label htmlFor="quantity">
                 <small>Quantity of Product:</small>
               </label>
@@ -115,29 +126,48 @@ export class AddProduct extends React.Component {
                 placeholder="e.g.10"
                 step="1"
                 min="0"
+                className="form-control col-7"
               />
             </div>
             <div>
-              <button type="submit">Submit</button>
+              <button type="submit" className="btn btn-dark btn-lg">
+                Submit
+              </button>
             </div>
           </form>
         </div>
 
         <div>
-          <h3>Cocktail Inventory</h3>
-          <div>
+          <hr />
+          <h3 className="h3">Cocktail Inventory</h3>
+          <div className="container">
             {products.length ? (
               products.map((product, ind) => (
-                <div key={product.id}>
-                  <img src={product.imageUrl} alt={product.name} />
-                  <h4>{product.name}</h4>
-                  <p>${product.price / 100}</p>
-                  <Link to={`/admin/products/${product.id}`}>
-                    <button>Edit Cocktail</button>
-                  </Link>
-                  <button value={product.id} onClick={this.handleDelete}>
-                    Delete Cocktail
-                  </button>
+                <div key={product.id} className="card mb-3 col-10">
+                  <h4 className="h3 card-header">{product.name}</h4>
+                  <div className="card-body">
+                    <img
+                      src={product.imageUrl}
+                      alt={product.name}
+                      className="rounded float-start"
+                      width="100"
+                    />
+                    <div className="float-end">
+                      <p className="h5">${product.price / 100}</p>
+                      <Link to={`/admin/products/${product.id}`}>
+                        <button className="btn-sm btn-light mb-3">
+                          Edit Cocktail
+                        </button>
+                      </Link>
+                      <button
+                        value={product.id}
+                        onClick={this.handleDelete}
+                        className="btn-sm btn-dark col-12"
+                      >
+                        Delete Cocktail
+                      </button>
+                    </div>
+                  </div>
                 </div>
               ))
             ) : (

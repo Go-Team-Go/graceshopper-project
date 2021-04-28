@@ -11,21 +11,23 @@ export class AllUsers extends React.Component {
     const { users } = this.props;
 
     return (
-      <div>
+      <div className="container">
         {users.length ? (
           users.map((user) => (
-            <div key={user.id}>
-              <p>User ID: {user.id}</p>
-              <p>User Name: {user.username}</p>
-              <p>Email: {user.email}</p>
-              <p>Admin: {user.admin ? 'yes' : 'no'}</p>
+            <div key={user.id} className="card mb-3 col-10">
+              <h3 className="h3 card-header"> {user.username}</h3>
+              <div className="card-body">
+                <p className="h5">User ID: {user.id}</p>
+                <p className="h5">Email: {user.email}</p>
+                <p className="h5">Admin: {user.admin ? 'yes' : 'no'}</p>
+              </div>
             </div>
           ))
         ) : (
           <div>
             <h3>Loading...</h3>
             <img
-              src="https://media1.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
+              src="https://media4.giphy.com/media/h8fnSteH0zUrlMf291/giphy.gif"
               alt="loading"
             />
           </div>

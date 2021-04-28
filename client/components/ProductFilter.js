@@ -65,48 +65,87 @@ class ProductFilters extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleFilter} name="priceFilter">
-          <label htmlFor="priceFilter">filter by price</label>
-          <select
-            name="priceFilter"
-            value={this.state.priceFilter}
-            onChange={this.handleChange}
-          >
-            <option value="ALL">All</option>
-            <option value={OVER_TEN}>Over $10</option>
-            <option value={UNDER_TEN}>Under $10</option>
-          </select>
-          <button type="submit">apply filter</button>
+        <h6 className="h6">Filter:</h6>
+        <form onSubmit={this.handleFilter} name="priceFilter" className="mb-3">
+          <div className=" input-group w-50 ">
+            {/* <label htmlFor="priceFilter" className=" form-label">
+              <small>filter by price</small>
+            </label> */}
+            <span className="input-group-text" id="byPrice">
+              price
+            </span>
+            <select
+              name="priceFilter"
+              value={this.state.priceFilter}
+              onChange={this.handleChange}
+              className="form-select form-select-sm col form-control"
+            >
+              <option value="ALL">All</option>
+              <option value={OVER_TEN}>Over $10</option>
+              <option value={UNDER_TEN}>Under $10</option>
+            </select>
+            <button type="submit" className="btn col btn-dark btn-sm">
+              apply
+            </button>
+          </div>
         </form>
-        <form onSubmit={this.handleFilter} name="alcoholFilter">
-          <label htmlFor="alcoholFilter">filter by alcohol type</label>
-          <select
-            name="alcoholFilter"
-            value={this.state.alcoholFilter}
-            onChange={this.handleChange}
-          >
-            <option value="ALL">All</option>
-            <option value={GIN}>Gin</option>
-            <option value={TEQUILA}>Tequila</option>
-            <option value={VODKA}>Vodka</option>
-            <option value={RUM}>Rum</option>
-          </select>
-          <button type="submit">apply filter</button>
+        <form
+          onSubmit={this.handleFilter}
+          name="alcoholFilter"
+          className="mb-3"
+        >
+          <div className=" input-group w-50 ">
+            {/* <label htmlFor="alcoholFilter">
+              <small>filter by alcohol type</small>
+            </label> */}
+            <span className="input-group-text" id="byAlch">
+              type
+            </span>
+            <select
+              name="alcoholFilter"
+              value={this.state.alcoholFilter}
+              onChange={this.handleChange}
+              className="form-select form-select-sm col form-control"
+            >
+              <option value="ALL">All</option>
+              <option value={GIN}>Gin</option>
+              <option value={TEQUILA}>Tequila</option>
+              <option value={VODKA}>Vodka</option>
+              <option value={RUM}>Rum</option>
+            </select>
+            <button type="submit" className="btn col btn-dark btn-sm">
+              apply
+            </button>
+          </div>
         </form>
-        <form onSubmit={this.handleSort} name="sortParam">
-          <label htmlFor="sortParam">sort by price</label>
-          <select
-            name="sortParam"
-            value={this.state.sortParam}
-            onChange={this.handleChange}
-          >
-            <option value="UNSORTED">---------</option>
-            <option value={PRICE_LOW}>Low to High</option>
-            <option value={PRICE_HIGH}>High to Low</option>
-          </select>
-          <button type="submit">apply</button>
+        <form onSubmit={this.handleSort} name="sortParam" className="mb-3">
+          <div className=" input-group w-50 ">
+            {/* <label htmlFor="sortParam" className=" form-label">
+              <small>sort by price</small>
+            </label> */}
+            <span className="input-group-text" id="lowHigh">
+              sort
+            </span>
+            <select
+              name="sortParam"
+              value={this.state.sortParam}
+              onChange={this.handleChange}
+              className="form-select form-select-sm col form-control"
+            >
+              <option value="UNSORTED">---------</option>
+              <option value={PRICE_LOW}>ascending</option>
+              <option value={PRICE_HIGH}>descending</option>
+            </select>
+            <button type="submit" className="btn col btn-dark btn-sm">
+              apply
+            </button>
+          </div>
         </form>
-        <button type="button" onClick={this.handleReset}>
+        <button
+          type="button"
+          onClick={this.handleReset}
+          className="btn col btn-dark btn-sm mb-3"
+        >
           reset
         </button>
       </div>
